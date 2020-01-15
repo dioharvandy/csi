@@ -26,17 +26,30 @@
                             <i class="nav-icon"></i> Mahasiswa
                         </a>
                     </li>
+                </ul>
+            </li>
 
-                    {{-- Menu Tendik --}}
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon fas fa-laptop"></i> Pengelolaan Semhas</a>
+                <ul class="nav-dropdown-items">
+
+                    {{-- Menu Pengajuan Seminar Hasil--}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.staffs.index') }}">
-                            <i class="nav-icon"></i> Tendik
+                        <a class="nav-link" href="{{ url('/thesis_seminar') }}">
+                            <i class="nav-icon"></i>Pengajuan Semhas
+                        </a>
+                    </li>
+
+                    {{-- Menu Kelola Daftar Hadir Seminar Hasil--}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="">
+                            <i class="nav-icon"></i>Kelola Daftar Hadir
                         </a>
                     </li>
 
                 </ul>
             </li>
-
 
         </ul>
     </nav>
