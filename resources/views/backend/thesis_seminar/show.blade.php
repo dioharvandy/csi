@@ -27,7 +27,7 @@
                 {{-- CARD BODY--}}
                 <div class="card-body">  
 
-                    {{ Form::model($semhass, []) }}
+                    {{ Form::model($thesisseminars, []) }}
 
                     <div class="form-group">
                         <label for="student"><strong>Nama Mahasiswa</strong></label>

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\ThesisSeminar;
-use App\ThesisProposal;
-use App\Thesis;
 use DB;
 use Illuminate\Http\Request;
 
@@ -16,10 +14,6 @@ class ThesisSeminarController extends Controller
                           ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
                           ->select('thesis_seminars.id', 'thesis_seminars.registered_at', 'thesis_seminars.seminar_at', 'thesis_seminars.status', DB::raw('(CASE WHEN thesis_seminars.status = 1 THEN '. "'Mengajukan'".'END) AS status_semhas'))
                           ->paginate(3);
-
-        /*$statuss        = DB::table('thesis_seminars')
-                          ->select('status', DB::raw('(CASE WHEN status = 1 THEN '. "'Mengajukan'".'END)'))
-                          ->distinct();*/
 
         return view('backend.thesis_seminar.index', compact('thesisseminars'));
     }
@@ -40,18 +34,18 @@ class ThesisSeminarController extends Controller
       return view('backend.thesis_seminar.create');
     }
 
-    public  function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'thesis_id'=>'required',
             'status' => 'required',
-            'file_report' =>'file|mimes:pdf'
+            'file_report' =>'file|mimes:pdf, required'
         ]);
-    	    $semhas = new ThesisSeminar();
-            $semhas->thesis_id = $request->input('thesis_id');
-            $semhas->status = $request->input('status');
+    	    $semhas = new ThesisSeminar;
+            $semhas->thesis_id = $request->thesis_id;
+            $semhas->status = $request->status;
       
-            if($request->file('file_report')->isValid())
+            if($request->hasFile('file_laporan') && $request->file('file_report')->isValid())
             {
                 $filename = uniqid('laporan-');
                 $fileext = $request->file('file_report')->extension();
@@ -59,14 +53,17 @@ class ThesisSeminarController extends Controller
                 $filepath = $request->file_report->storeAs('/laporan_ta',$filenameext);
                 $semhas->file_report = $filepath;
             }
-            $semhas->save();
-      
-            return redirect()->route('admin.semhas.show',[$semhas->id]);      
+            if($semhas->save()) {
+                session()->flash('flash_success', 'Berhasil menambahkan pengajuan semhas baru');
+                
+                return redirect()->route('admin.semhas.show', [$semhas->id]);
+            }
+            return redirect()->back()->withErrors();
     }
 
     public function show($id)
     {
-        $semhass = DB::table('thesis_seminars')
+        $thesisseminars = DB::table('thesis_seminars')
                 ->join('thesis_sem_reviewers', 'thesis_seminars.id', '=', 'thesis_sem_reviewers.thesis_seminar_id')
                 ->join('lecturers', 'thesis_sem_reviewers.reviewer_id', '=', 'lecturers.id')
                 ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
@@ -78,18 +75,24 @@ class ThesisSeminarController extends Controller
                 ->where('thesis_seminars.id','=',$id)
                 ->get();
                   
-        $semhass = $semhass[0];
+        $thesisseminars = $thesisseminars[0];
   
-        return view('backend.thesis_seminar.show', compact('semhass'));
+        return view('backend.thesis_seminar.show', compact('thesisseminars'));
     }
 
     public function destroy($id)
     {
-        $semhass = DB::table('thesis_seminars')
-        ->join('thesis_sem_audiences', 'thesis_seminars.id', '=', 'thesis_sem_audiences.thesis_seminar_id')
-        ->join('thesis_sem_reviewers', 'thesis_seminars.id', '=', 'thesis_sem_reviewers.thesis_seminar_id')
+        $a = db::table('thesis_sem_audiences')
+        ->where('thesis_seminar_id','=',$id);
+        $a->delete();
+        $b = db::table('thesis_sem_reviewers')
+        ->where('thesis_seminar_id','=',$id);
+        $b->delete();
+        $thesisseminars = DB::table('thesis_seminars')
+        // ->join('thesis_sem_audiences', 'thesis_seminars.id', '=', 'thesis_sem_audiences.thesis_seminar_id')
+        // ->join('thesis_sem_reviewers', 'thesis_seminars.id', '=', 'thesis_sem_reviewers.thesis_seminar_id')
         ->where('thesis_seminars.id','=',$id);
-        $semhass->delete();
+        $thesisseminars->delete();
         session()->flash('flash_success', 'Berhasil membatalkan pengajuan semhas');
         return redirect()->route('admin.semhas.index');
     }

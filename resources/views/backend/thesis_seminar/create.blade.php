@@ -31,6 +31,7 @@
 
                 {{-- CARD FOOTER --}}
                 <div class="card-footer">
+                {{ csrf_field() }}
                     <input type="submit" value="Simpan" class="btn btn-primary"/>
                 </div>
 
