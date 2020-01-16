@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 /** Routing Pengelolaan Semhas */
-Route::get('/thesis_seminar', 'ThesisSeminarController@index');  //routing lihat daftar semhas
+Route::get('/thesis_seminar', 'ThesisSeminarController@index')->name('admin.semhas.index');  //routing lihat daftar semhas
 Route::post('/thesis_seminar', 'ThesisSeminarController@store')->name('admin.semhas.store'); //routing simpan data semhas
 Route::get('/thesis_seminar/create', 'ThesisSeminarController@create'); //routing tampilkan form data semhas 
 Route::delete('/thesis_seminar/{id}', 'ThesisSeminarController@destroy')->name('admin.semhas.destroy'); //routing hapus data semhas 

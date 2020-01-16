@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ThesisSeminar extends Model
 {
-    protected $table = 'thesis_seminar';
+    protected $table = 'thesis_seminars';
     protected $guarded = [];
 
     public function thesess()

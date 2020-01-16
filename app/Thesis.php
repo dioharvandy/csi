@@ -13,4 +13,9 @@ class Thesis extends Model
     {
         return $this->hasMany(ThesisSeminar::class);
     }
+
+    public function proposals()
+    {
+        return $this->hasMany(ThesisProposal::class);
+    }
 }

@@ -4,7 +4,7 @@
     {!! cui_breadcrumb([
         'Home' => url('/home'),
         'Thesis Seminar' => url('/thesis_seminar'),
-        'Create' => '#'
+        'Add Seminar' => '#'
     ]) !!}
 @endsection
 
