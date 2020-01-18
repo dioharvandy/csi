@@ -12,13 +12,22 @@
 */
 
 Auth::routes();
-
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+Route::get('/login', 'AuthController@login')->name('login');
+Route::get('/logout', 'AuthController@logout')->name('logout');
+Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 
-    Route::get('home', 'HomeController@index')->name('home');
+ Route::middleware('auth')->group( function() {
+    Route::get('/home', 'DashboardController@index')->name('home');
+    Route::get('/mahasiswa', 'StudentSemesterController@index')->name('admin.students.index');
+ });
 
-    require(__DIR__ . '/backend/master.php');
-});
+
+// Route::group(['namespace' => 'backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+    
+//     Route::get('home', 'HomeController@index')->name('home');
+//     require(__DIR__ . '/backend/master.php');
+// });
+
+// Route::get('/admin/mahasiswa', 'StudentSemesterController@index')->name('admin.mahasiswa.index');

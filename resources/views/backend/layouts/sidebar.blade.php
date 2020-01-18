@@ -15,7 +15,7 @@
 
                     {{-- Menu Dosen--}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.lecturers.index') }}">
+                        {{-- <a class="nav-link" href="{{ route('admin.lecturers.index') }}"> --}}
                             <i class="nav-icon"></i> Dosen
                         </a>
                     </li>
@@ -29,7 +29,7 @@
 
                     {{-- Menu Tendik --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.staffs.index') }}">
+                        {{-- <a class="nav-link" href="{{ route('admin.staffs.index') }}"> --}}
                             <i class="nav-icon"></i> Tendik
                         </a>
                     </li>
