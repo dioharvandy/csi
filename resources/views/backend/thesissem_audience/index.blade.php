@@ -3,7 +3,7 @@
 @section('breadcrumb')
     {!! cui_breadcrumb([
         'Home' => route('admin.home'),
-        'Semhas' => route('admin.semhas.index'),
+        'Thesis Seminar' => url('/thesis_seminar'),
         'Index' => '#'
     ]) !!}
 @endsection
@@ -19,7 +19,7 @@
 
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-                    List Peserta Semhas
+                    Daftar Peserta Semhas
                 </div>
 
                 {{-- CARD BODY--}}
@@ -41,14 +41,14 @@
                         <thead>
                         <tr>
                             <th class="text-center">Nama</th>
-                            <th class="text-center">Nim</th>
+                            <th class="text-center">NIM</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody>
                         @forelse($semhass as $peserta)
                             <tr>
-                                <td class="text-center">{{ $peserta->nama }}</td>
+                                <td class="text-center">{{ $peserta->name }}</td>
                                 <td class="text-center">{{ $peserta->nim }}</td>
                                 <td class="text-center">
                                 {!! cui_btn_delete(route('admin.pesertasemhas.destroy', [$peserta->id]), "Anda yakin akan menghapus data peserta semhas ini?") !!}

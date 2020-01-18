@@ -3,13 +3,13 @@
 @section('breadcrumb')
     {!! cui_breadcrumb([
         'Home' => route('admin.home'),
-        'Semhas' => route('admin.semhas.index'),
+        'Thesis Seminar' => url('/thesis_seminar'),
         'Tambah' => '#'
     ]) !!}
 @endsection
 
 @section('toolbar')
-    {!! cui_toolbar_btn(route('admin.pesertasemhas.index',[$id]), 'icon-list', 'List Peserta Semhas') !!}
+    {!! cui_toolbar_btn(route('admin.pesertasemhas.index',[$id]), 'icon-list', 'Daftar Peserta Semhas') !!}
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
 
                 {{-- CARD BODY --}}
                 <div class="card-body">
-                    @include('backend.pesertasemhas._form')
+                    @include('backend.thesissem_audience._form')
                 </div>
 
                 {{-- CARD FOOTER --}}

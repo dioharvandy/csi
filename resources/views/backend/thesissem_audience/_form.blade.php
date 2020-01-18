@@ -1,5 +1,5 @@
-<input type="hidden" name="ta_semhas_id" value="{{ $id }}">
+<input type="hidden" name="thesis_seminar_id" value="{{ $id }}">
 <div class="form-group">
-    <label for="mahasiswa">Nama Mahasiswa</label>
-    {{ Form::select('mahasiswa_id', $mahasiswas, null, ['class' => 'form-control', 'nama' => 'nama', 'placeholder' => 'Mahasiswa']) }}
+    <label for="student">Nama Mahasiswa</label>
+    {{ Form::select('student_id', $students, null, ['class' => 'form-control', 'name' => 'name', 'placeholder' => 'Mahasiswa']) }}
 </div>

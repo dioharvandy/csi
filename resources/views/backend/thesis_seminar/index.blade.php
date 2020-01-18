@@ -55,7 +55,7 @@
                                     {!! cui_btn_view(route('admin.semhas.show', [$semhas->id])) !!}
                                     {!! cui_btn_edit(route('admin.semhas.edit', [$semhas->id])) !!}
                                     {!! cui_btn_delete(route('admin.semhas.destroy', [$semhas->id]), "Anda yakin akan membatalkan pengajuan semhas ini?") !!}
-                                    {!! cui_btn(url('/thesissem_audience/{id}', [$semhas->id]), 'icon-people','Peserta') !!}
+                                    {!! cui_btn(route('admin.pesertasemhas.index', [$semhas->id]), 'icon-people','Peserta') !!}
                                 
                                 </td>
                             </tr>
