@@ -14,16 +14,16 @@
                 <ul class="nav-dropdown-items">
 
                     {{-- Menu Dosen--}}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dosen.index') }}">
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" href="">
                             <i class="nav-icon"></i>Dosen
                         </a>
-                    </li>
+                    </li> --}}
 
                     {{-- Menu Mahasiswa--}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.mahasiswa.index') }}">
-                            <i class="nav-icon"></i> Mahasiswa
+                        <a class="nav-link" href="{{ url('/attendance') }}">
+                            <i class="nav-icon"></i> Absensi
                         </a>
                     </li>
 

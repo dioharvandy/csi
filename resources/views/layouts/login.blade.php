@@ -11,8 +11,8 @@
     <title>{{ config('app.name', 'Element') }}</title>
 
     <!-- Icons -->
-    <link href="{!! asset('vendors/css/font-awesome.min.css') !!}" rel="stylesheet">
-    <link href="{!! asset('vendors/css/simple-line-icons.min.css') !!}" rel="stylesheet">
+    <link href="{!! asset('css/font-awesome.min.css') !!}" rel="stylesheet">
+    <link href="{!! asset('css/simple-line-icons.min.css') !!}" rel="stylesheet">
 
     <!-- Main styles for this application -->
     <link href="{!! asset('css/style.css') !!}" rel="stylesheet">

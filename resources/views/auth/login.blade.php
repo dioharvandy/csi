@@ -13,8 +13,8 @@
     <title>{{ config('app.name', 'Element') }}</title>
 
     <!-- Icons -->
-    <link href="{!! asset('vendors/css/font-awesome.min.css') !!}" rel="stylesheet">
-    <link href="{!! asset('vendors/css/simple-line-icons.min.css') !!}" rel="stylesheet">
+    <link href="{!! asset('css/font-awesome.min.css') !!}" rel="stylesheet">
+    <link href="{!! asset('css/simple-line-icons.min.css') !!}" rel="stylesheet">
 
     <!-- Main styles for this application -->
     <link href="{{ mix('css/backend.css') }}" rel="stylesheet" >
@@ -94,9 +94,9 @@
 </div>
 
 <!-- Bootstrap and necessary plugins -->
-<script src="{{ asset('vendors/js/jquery.min.js') }}"></script>
-<script src="{{ asset('vendors/js/popper.min.js') }}"></script>
-<script src="{{ asset('vendors/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 </body>
 

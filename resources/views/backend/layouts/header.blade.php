@@ -38,8 +38,10 @@
 
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                aria-expanded="false">
-                <img src="{{ Avatar::create(Auth::user()->email)->toBase64() }}" class="img-avatar" alt="{{ Auth::user()->email }}">
-                <span class="d-md-down-none">{{ optional(Auth::user()->pegawai)->nama }}</span>
+                {{-- <img src="{{ Avatar::create(Auth::user()->email)->toBase64() }}" class="img-avatar" alt="{{ Auth::user()->email }}"> --}}
+                <img class="img-avatar" src="">
+                {{-- <span class="d-md-down-none">{{ optional(Auth::user()->pegawai)->nama }}</span> --}}
+                <span class="d-md-down-none"></span>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
