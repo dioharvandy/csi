@@ -22,6 +22,11 @@ class Student extends Model
     {
         return $this->hasOne(User::class, 'id');
     }
+    
+    public function theses()
+    {
+        return $this->hasMany(Theses::class, 'student_id');
+    }
 
     public function department(){
         return $this->belongsTo(Department::class, 'department_id');

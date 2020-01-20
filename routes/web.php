@@ -20,7 +20,8 @@ Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 
  Route::middleware('auth')->group( function() {
     Route::get('/home', 'DashboardController@index')->name('home');
-    Route::get('/mahasiswa', 'StudentSemesterController@index')->name('admin.students.index');
+    Route::get('/mahasiswa', 'StudentController@index')->name('admin.students.index');
+    Route::get('/mahasiswa/logbook/{id}', 'ThesisLogbookController@index')->name('admin.ta_logbook.index');
  });
 
 

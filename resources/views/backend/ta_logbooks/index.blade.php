@@ -19,7 +19,7 @@
 
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-                    <strong><i class="fa fa-list"></i> List Tugas Akhir</strong>
+                    <strong><i class="fa fa-list"></i> List Log Book TA</strong>
                 </div>
 
                 {{-- CARD BODY--}}
@@ -37,40 +37,34 @@
                         <thead>
                         <tr>
                             <th class="text-center">No.</th>
-                            <th class="text-center">Topik</th>
-                            <th class="text-center">Judul</th>
-                            <th class="text-center">Deskripsi</th>
+                            <th class="text-center">Judul TA</th>
                             <th class="text-center">Pembimbing</th>
-                            <th class="text-center">Tanggal Mulai</th>
-                            <th class="text-center">Lihat Logbook</th>
+                            <th class="text-center">Tanggal Logbook</th>
+                            <th class="text-center">Progress</th>
+                            <th class="text-center">File Progres</th>
+                            <th class="text-center">Supervised by</th>
+                            <th class="text-center">Supervised at</th>
+                            <th class="text-center">File note</th>
+                            <th class="text-center">Status</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($theses as $theses)
-                            @if($theses->status == 1)
+                        @foreach($logbook as $logbook)
+                            {{-- @if($logbook->status == 1) --}}
                             <?php $n = 1?>
                                 <tr>
-                                    <td>{{ $n }}</td>
-                                    <td>{{ $theses->topics_name }}</td>
-                                    <td>{{ $theses->title }}</td>
-                                    <td class="text-center">{{ $theses->abstract }}</td>
-                                    <td class="text-center">
-                                        @foreach ($supervisor as $supervisor)
-                                            @if ($supervisor->thesis_id == $theses->id)
-                                                {{$supervisor->lecturer_name}} <br>
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                    <td class="text-center">{{ $theses->start_at }}</td>
-                                    <td class="text-center">
-                                        Coming soon
-                                         {!! cui_btn_view(route('admin.ta_logbook.index', [$theses->id])) !!} 
-                                        {{--  {!! cui_btn_edit(route('admin.students.edit', [$theses->id])) !!}  --}}
-                                        {{--  {!! cui_btn_delete(route('admin.students.destroy', [$theses->id]), "Anda yakin akan menghapus data mahasiswa ini?") !!}  --}}
-                                    </td>
+                                    <td class="text-center">{{ $n }}</td>
+                                    <td class="text-center">{{ $logbook->thesis_title }}</td>
+                                    <td class="text-center">{{ $logbook->lecturer_name }}</td>
+                                    <td class="text-center">{{ $logbook->date }}</td>
+                                    <td class="text-center">{{ $logbook->progress }}</td>
+                                    <td class="text-center">{{ $logbook->files_progress }}</td>
+                                    <td class="text-center">{{ $logbook->supervised_by }}</td>
+                                    <td class="text-center">{{ $logbook->supervised_at }}</td>
+                                    <td class="text-center">{{ $logbook->files_notes }}</td>
+                                    <td class="text-center">{{ $logbook->status }}</td>
                                 </tr>
                             <?php $n = 1?>
-                            @endif
                         @endforeach
                         </tbody>
                     </table>

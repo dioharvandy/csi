@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Theses;
 use DB;
 
 class StudentSemesterController extends Controller
 {
     public function index()
     {
-        $theses = DB::table('theses')
+        $theses =  Theses::select('theses.*', 'thesis_topics.name as topics_name')
         ->join('thesis_topics', 'theses.thesis_id', '=', 'thesis_topics.id')
-        ->select('theses.*', 'thesis_topics.name as topics_name')->get();
+        ->get();
         // ->join('thesis_supervisors', 'thesis_supervisors.thesis_id', '=', 'theses.id')
         
         $supervisor = DB::table('thesis_supervisors')
