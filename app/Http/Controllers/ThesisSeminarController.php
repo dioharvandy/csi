@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\ThesisSeminar;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 
@@ -20,14 +21,16 @@ class ThesisSeminarController extends Controller
     
     public function create()
     {
-      $student = DB::table('thesis_seminars')
-                ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
-                ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
+      $nim = Auth::user()->username;
+      $student = DB::table('theses')
+                //->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.id')
+                //->join('thesis_proposals', 'theses.id', '=', 'thesis_proposals.thesis_id')
                 ->join('students', 'theses.student_id', '=', 'students.id')
-                ->select('theses.id')
+                ->select('theses.id')->where('students.nim', '=', $nim)
                 ->get();
-
-      /*$rekomendasi = DB::table('ta_semhas')
+      
+        //var_dump($student[0]);
+        /*$rekomendasi = DB::table('ta_semhas')
                     ->select('rekomendasi', DB::raw('(CASE WHEN rekomendasi = 1 THEN '. "'Mengulang Seminar'" .'WHEN rekomendasi = 2 THEN '. "'Lanjut Sidang dengan Revisi'".'WHEN rekomendasi = 3 THEN '."'Lanjut Sidang Tanpa Revisi'".'END) AS rekomendasi_semhas'))
                     ->distinct()
                     ->pluck('rekomendasi_semhas','rekomendasi');*/
@@ -53,31 +56,37 @@ class ThesisSeminarController extends Controller
                 $filepath = $request->file_report->storeAs('public/laporan_ta',$filenameext);
                 $semhas->file_report = $filepath;
             }
-            if($semhas->save()) {
-                session()->flash('flash_success', 'Berhasil menambahkan pengajuan semhas baru');
+            $semhas->save();
+            return redirect()->route('admin.semhas.show', [$semhas->id]);
+            // if($semhas->save()) {
+            //     session()->flash('flash_success', 'Berhasil menambahkan pengajuan semhas baru');
                 
-                return redirect()->route('admin.semhas.show', [$semhas->id]);
-            }
-            return redirect()->back()->withErrors();
+            //     return redirect()->route('admin.semhas.show', [$semhas->id]);
+            // }
+            // return redirect()->back()->withErrors();
     }
 
     public function show($id)
     {
         $thesisseminars = DB::table('thesis_seminars')
-                ->join('thesis_sem_reviewers', 'thesis_seminars.id', '=', 'thesis_sem_reviewers.thesis_seminar_id')
-                ->join('lecturers', 'thesis_sem_reviewers.reviewer_id', '=', 'lecturers.id')
                 ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
                 ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
                 ->join('students', 'theses.student_id', '=', 'students.id')
-           
-                ->select('thesis_proposals.id','students.name AS student_name','thesis_seminars.registered_at AS registered_time','thesis_seminars.seminar_at AS seminar_time','thesis_seminars.status','thesis_seminars.recommendation','thesis_seminars.file_report AS file_reports', 'lecturers.name AS reviewer_name', DB::raw('(CASE WHEN thesis_seminars.status = 1 THEN '. "'Mengajukan'" .'END) AS status_semhas'))
-
+                ->select('thesis_proposals.id','students.name AS student_name','thesis_seminars.registered_at AS registered_time','thesis_seminars.seminar_at AS seminar_time','thesis_seminars.status','thesis_seminars.recommendation','thesis_seminars.file_report AS file_reports', DB::raw('(CASE WHEN thesis_seminars.status = 1 THEN '. "'Mengajukan'" .' WHEN thesis_seminars.status = 2 THEN '."'Disetujui'".'END) AS status_semhas'))
                 ->where('thesis_seminars.id','=',$id)
                 ->get();
-                  
+
+        $reviewer = DB::table('thesis_seminars')
+                    ->join('thesis_sem_reviewers', 'thesis_seminars.id', '=', 'thesis_sem_reviewers.thesis_seminar_id')
+                    ->join('lecturers', 'thesis_sem_reviewers.reviewer_id', '=', 'lecturers.id')
+                    ->select('lecturers.name AS reviewer_name')
+                    ->where('thesis_seminars.id','=',$id)
+                    ->get();
+
+        //$reviewer = $reviewer[0];          
         $thesisseminars = $thesisseminars[0];
   
-        return view('backend.thesis_seminar.show', compact('thesisseminars'));
+        return view('backend.thesis_seminar.show', compact('thesisseminars', 'reviewer'));
     }
 
     public function destroy($id)

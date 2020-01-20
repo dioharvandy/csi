@@ -37,14 +37,16 @@
                         <label for="semhas_at"><strong>Waktu Mengajukan</strong></label>
                         {{ Form::input('timestamp','registered_time', null, ['class' => 'form-control-plaintext', 'id' => 'registered_time', 'readonly' => 'readonly','disabled']) }}
                     </div>
-
                     <div class="form-group">
                         <label for="jam"><strong>Jadwal Seminar</strong></label>
                         {{ Form::input('timestamp','seminar_time', null, ['class' => 'form-control-plaintext', 'id' => 'seminar_time', 'readonly' => 'readonly']) }}
                     </div>
                     <div class="form-group">
                         <label for="reviewer_name"><strong>Penguji</strong></label>
-                        {{ Form::text('reviewer_name', null, ['class' => 'form-control-plaintext', 'id' => 'reviewer_name', 'readonly' => 'readonly']) }}
+                    @foreach($reviewer as $r)
+                        {{ Form::text('reviewer_name', $r->reviewer_name, ['class' => 'form-control-plaintext', 'id' => 'reviewer_name', 'readonly' => 'readonly']) }}
+            
+                    @endforeach
                     </div>
                     <div class="form-group">
                         <label for="status"><strong>Status</strong></label>
