@@ -119,4 +119,49 @@ class ThesisSeminarController extends Controller
             }
         }
     }
+
+    public function edit($id)
+    {
+        $semhas = ThesisSeminar::findOrFail($id);
+        $nim = Auth::user()->username;
+        $student = DB::table('theses')
+                ->join('thesis_seminars', 'thesis_seminars.thesis_id', '=', 'theses.id')
+                //->join('thesis_proposals', 'theses.id', '=', 'thesis_proposals.thesis_id')
+                //->join('students', 'theses.student_id', '=', 'students.id')
+                ->select('theses.id')->where('thesis_seminars.id', '=', $id)
+                ->get();
+        //var_dump($student[0]);
+        return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id'));
+    }
+
+    public function update (Request $request, $id) {
+        $semhas = ThesisSeminar::findOrFail($id);
+            
+        $request->validate([
+            'thesis_id'=>'required',
+            'file_report' =>'file|mimes:pdf, required'
+        ]);
+
+        $semhas->thesis_id = $request->thesis_id;
+      
+            if($request->hasFile('file_report') && $request->file('file_report')->isValid())
+            {
+                if (\Storage::exists($semhas->file_report)) 
+                {
+                         \Storage::delete($semhas->file_report);
+                }
+                $filename = uniqid('laporan-');
+                $fileext = $request->file('file_report')->extension();
+                $filenameext = $filename.'.'.$fileext;
+                $filepath = $request->file_report->storeAs('public/laporan_ta',$filenameext);
+                $semhas->file_report = $filepath;
+            }
+            $semhas->save();
+            return redirect()->route('admin.semhas.show', [$semhas->id]);
+            // if ($thesisseminars->save()) {
+            //     session()->flash('flash_success','Berhasil memperbaharui data semhas');
+            //     return redirect()->route('admin.semhas.show', [$semhas->id]);
+            //     }
+            // return redirect()->route('admin.semhas.show');
+        }
 }

@@ -3,14 +3,14 @@
 @section('breadcrumb')
     {!! cui_breadcrumb([
         'Home' => route('admin.home'),
-        'Semhas' => route('admin.semhas.index'),
+        'Semhas' => url('/thesis_seminar'),
         'Edit' => '#'
     ]) !!}
 @endsection
 
 @section('toolbar')
     {!! cui_toolbar_btn(route('admin.semhas.create'), 'icon-plus', 'Tambah Semhas') !!}
-    {!! cui_toolbar_btn(route('admin.semhas.index'), 'icon-list', 'List Semhas') !!}
+    {!! cui_toolbar_btn(route('admin.semhas.index'), 'icon-list', 'Daftar Semhas') !!}
 
 @endsection
 
@@ -19,7 +19,7 @@
         <div class="col-md-12">
             <div class="card">
 
-                {{Form::model($semhas, ['route' => ['admin.semhas.update', $semhas->id], 'method' => 'patch', 'files' => 'true']) }}
+                {{Form::model($semhas, ['route' => ['admin.semhas.update', $semhas->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) }}
 
                 {{-- CARD HEADER --}}
                 <div class="card-header">
@@ -28,7 +28,7 @@
 
                 {{-- CARD BODY --}}
                 <div class="card-body">
-                    @include('backend.semhas.edit_form')
+                    @include('backend.thesis_seminar.edit_form')
                 </div>
 
                 {{-- CARD FOOTER --}}
