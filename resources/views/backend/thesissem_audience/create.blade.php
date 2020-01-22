@@ -18,7 +18,7 @@
             <div class="card">
                 
                 {{ Form::open(['route' => 'admin.pesertasemhas.store', 'method' => 'post']) }}
-
+                {{ csrf_field() }}
                 {{-- CARD HEADER --}}
                 <div class="card-header">
                     Tambah Data Peserta Semhas

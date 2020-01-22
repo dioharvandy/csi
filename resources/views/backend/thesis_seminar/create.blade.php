@@ -18,7 +18,7 @@
             <div class="card">
 
                 {{ Form::open(['route' => 'admin.semhas.store', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
-
+                {{ csrf_field() }}
                 {{-- CARD HEADER --}}
                 <div class="card-header">
                     Pengajuan Semhas
@@ -31,7 +31,7 @@
 
                 {{-- CARD FOOTER --}}
                 <div class="card-footer">
-                {{ csrf_field() }}
+                
                     <input type="submit" value="Simpan" class="btn btn-primary"/>
                 </div>
 

@@ -21,6 +21,7 @@ class ThesisSemAudienceController extends Controller
     public function create($id)
     {
         $students = Student::all()->pluck('name','id');
+        //var_dump($id);
     	return view('backend.thesissem_audience.create',compact('students','id'));
     }
     public function store(Request $request)
@@ -29,15 +30,18 @@ class ThesisSemAudienceController extends Controller
             'thesis_seminar_id'=>'required',
             'student_id' => 'required' 
         ]);
-
+        //dd($request);
     		$pesertas = new ThesisSemAudience();
             $pesertas->thesis_seminar_id = $request->input('thesis_seminar_id');
             $pesertas->student_id = $request->input('student_id');
 
-            if($pesertas->save()){
-                return redirect()->route('admin.pesertasemhas.index',[$request->input('thesis_seminar_id')]);
-            }
-            return redirect()->back()->withErrors(); 
+            $pesertas->save();
+            return redirect()->route('admin.pesertasemhas.index',[$pesertas->thesis_seminar_id]);
+            
+            // if($pesertas->save()){
+            //     return redirect()->route('admin.pesertasemhas.index',[$request->input('thesis_seminar_id')]);
+            // }
+            // return redirect()->back()->withErrors(); 
     }
     
     public function destroy($id)
