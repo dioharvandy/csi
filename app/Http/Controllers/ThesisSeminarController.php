@@ -122,16 +122,37 @@ class ThesisSeminarController extends Controller
 
     public function edit($id)
     {
-        $semhas = ThesisSeminar::findOrFail($id);
-        $nim = Auth::user()->username;
-        $student = DB::table('theses')
-                ->join('thesis_seminars', 'thesis_seminars.thesis_id', '=', 'theses.id')
-                //->join('thesis_proposals', 'theses.id', '=', 'thesis_proposals.thesis_id')
-                //->join('students', 'theses.student_id', '=', 'students.id')
-                ->select('theses.id')->where('thesis_seminars.id', '=', $id)
-                ->get();
-        //var_dump($student[0]);
-        return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id'));
+        //Cek status persetujuan admin 
+        $statuss = DB::table('thesis_seminars') 
+                  ->select('thesis_seminars.status')
+                  ->where('thesis_seminars.id','=', $id)
+                  ->get();
+        //echo $status;
+        foreach($statuss as $status)
+        {
+            foreach($status as $st)
+            {
+                if($st == 1)
+                {
+                    $semhas = ThesisSeminar::findOrFail($id);
+                    $nim = Auth::user()->username;
+                    $student = DB::table('theses')
+                            ->join('thesis_seminars', 'thesis_seminars.thesis_id', '=', 'theses.id')
+                            //->join('thesis_proposals', 'theses.id', '=', 'thesis_proposals.thesis_id')
+                            //->join('students', 'theses.student_id', '=', 'students.id')
+                            ->select('theses.id')->where('thesis_seminars.id', '=', $id)
+                            ->get();
+        
+                    return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id'));
+                }
+                elseif($st != 1)
+                {
+                    session()->flash('flash_success', 'Gagal mengubah data pengajuan. Pengajuan telah disetujui.');
+                    return redirect()->route('admin.semhas.index');
+                }
+            }
+        }
+        
     }
 
     public function update (Request $request, $id) {
