@@ -65,39 +65,123 @@
                                     <th class="text-center">Nama Mahasiswa</th>
                                     <th class="text-center">NIM</th>
                                     <th class="text-center">Pertemuan</th>
-                                    <th class="text-center">Detail</th>
+                                    <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{-- @foreach($students as $student) --}}
-                                
+                                @foreach($students as $student) 
                                     <tr>
                                         <td class="text-center">
-                                            
+                                            {{ $student->std_name }}
                                         </td>
                                         <td class="text-center">
-                                            
+                                            {{ $student->nim }}
                                         </td>
-                                        {{-- <td>{{ $student->name }}</td>
-                                        <td class="text-center">{{ $student->nim }}</td> --}}
-                                        <td class="text-center">
-                                            
-                                            
-                                            {{-- {!! cui_btn_edit(route('admin.students.edit', [$student->id])) !!}
-                                            {!! cui_btn_delete(route('admin.students.destroy', [$student->id]), "Anda yakin akan menghapus data mahasiswa ini?") !!} --}}
+                                        <td class="text-center">    
+                                            {{ $student->status }}           
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Absen</button>
-                                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".absen">Absen</button>
+                                            <div class="modal fade absen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
-                                                ...
+                                                    <strong>{{Carbon\Carbon::now()->translatedformat('l, d-F-Y H:i')}}/{{$student->std_name}}</strong>
+                                                    {!! Form::open(['method' => 'GET', 'url' => '/attendance/'.$student->id, 'class' => '', 'role' => 'submit'])  !!}
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline1">Hadir</label>
+                                                      </div>
+                                                      <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline2">Alfa</label>
+                                                      </div>
+                                                      <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline3">Sakit</label>
+                                                      </div>
+                                                      <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline4" name="customRadioInline1" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline4">Izin</label>
+                                                      </div>
+                                                      <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadioInline5" name="customRadioInline1" class="custom-control-input">
+                                                        <label class="custom-control-label" for="customRadioInline5">Tanpa Keterangan</label>
+                                                      </div>
+                                                      <button type="submit" class="btn btn-primary btn-sm mb-1">Submit</button>
+                                                    {!! Form::close() !!}
                                                 </div>
                                             </div>
                                             </div>
+                                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".edit">Edit</button>
+                                            <div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <strong class="text-left"> Nama Mahasiswa : {{$student->std_name}}</strong>
+                                                    <table class="table">
+                                                        <thead>
+                                                          <tr>
+                                                            <th scope="col">No</th>
+                                                            <th scope="col">Tanggal</th>
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Aksi</th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {!! Form::open(['method' => 'GET', 'url' => '/attendance/'.$student->id, 'class' => '', 'role' => 'submit'])  !!}
+                                                          <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>{{Carbon\Carbon::now()->translatedformat('l, d-F-Y H:i')}}</td>
+                                                            <td><select name="status" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                                    <option value="">Hadir</option>
+                                                                    <option value="">Alfa</option>
+                                                                    <option value="">Sakit</option>
+                                                                    <option value="">Izin</option>
+                                                                    <option value="">Tanpa Keterangan</option>
+                                                                </select>
+                                                            </td>
+                                                            <td><button type="submit" class="btn btn-primary btn-sm mb-1">Submit</button></td>
+                                                          </tr>
+                                                          {!! Form::close() !!}
+                                                          {!! Form::open(['method' => 'GET', 'url' => '/attendance/'.$student->id, 'class' => '', 'role' => 'submit'])  !!}
+                                                          <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>{{Carbon\Carbon::now()->translatedformat('l, d-F-Y H:i')}}</td>
+                                                            <td><select name="status" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                                    <option value="">Hadir</option>
+                                                                    <option value="">Alfa</option>
+                                                                    <option value="">Sakit</option>
+                                                                    <option value="">Izin</option>
+                                                                    <option value="">Tanpa Keterangan</option>
+                                                                </select>
+                                                            </td>
+                                                            <td><button type="submit" class="btn btn-primary btn-sm mb-1">Submit</button></td>
+                                                          </tr>
+                                                          <tr>
+                                                            {!! Form::open(['method' => 'GET', 'url' => '/attendance/'.$student->id, 'class' => '', 'role' => 'submit'])  !!}
+                                                            {!! Form::close() !!}
+                                                            <th scope="row">3</th>
+                                                            <td>{{Carbon\Carbon::now()->translatedformat('l, d-F-Y H:i')}}</td>
+                                                            <td><select name="status" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                                    <option value="">Hadir</option>
+                                                                    <option value="">Alfa</option>
+                                                                    <option value="">Sakit</option>
+                                                                    <option value="">Izin</option>
+                                                                    <option value="">Tanpa Keterangan</option>
+                                                                </select>
+                                                        </td>
+                                                            <td><button type="submit" class="btn btn-primary btn-sm mb-1">Submit</button></td>
+                                                          </tr>
+                                                          {!! Form::close() !!}
+                                                        </tbody>
+                                                      </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            {{-- {!! cui_btn_edit(route('admin.students.edit', [$student->id])) !!}
+                                            {!! cui_btn_delete(route('admin.students.destroy', [$student->id]), "Anda yakin akan menghapus data mahasiswa ini?") !!} --}}
                                         </td>
                                     </tr>
-                                
+                                @endforeach
                                 </tbody>
                             </table>
                     </div>

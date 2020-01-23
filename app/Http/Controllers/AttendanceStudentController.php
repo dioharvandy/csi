@@ -92,7 +92,15 @@ class AttendanceStudentController extends Controller
          ->select('attendance_students.*','courses.name AS crs_name','courses.code','courses.semester','lecturers.name AS lecname')
          ->get();
 
-         return view('backend.attendance.show', compact('attendance'));
+         $students = DB::table('attendance_students')
+         ->join('course_selections','course_selection_id','=','course_selections.id')
+         ->join('student_semesters','student_semester_id','=','student_semesters.id')
+         ->join('students','student_id','=','students.id')
+         ->where('attendance_students.id','=',$id)
+         ->select('attendance_students.*','students.name AS std_name','students.nim')
+         ->get();
+
+         return view('backend.attendance.show', compact('attendance','students'));
      }
  
      /**
