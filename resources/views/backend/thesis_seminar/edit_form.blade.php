@@ -8,5 +8,5 @@
 </div>
 
 <div class="form-group">
-    {{ Form::hidden('status', 1, ['class' => 'form-control', 'id' => 'status']) }}
+    {{ Form::hidden('status', 10, ['class' => 'form-control', 'id' => 'status']) }}
 </div>

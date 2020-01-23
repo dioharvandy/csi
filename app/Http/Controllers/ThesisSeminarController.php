@@ -13,28 +13,42 @@ class ThesisSeminarController extends Controller
         $thesisseminars = DB::table('thesis_seminars')
                           ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
                           ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
-                          ->select('thesis_seminars.id', 'thesis_seminars.registered_at', 'thesis_seminars.seminar_at', 'thesis_seminars.status', DB::raw('(CASE WHEN thesis_seminars.status = 1 THEN '. "'Mengajukan'".' WHEN thesis_seminars.status = 2 THEN '."'Disetujui'".' END) AS status_semhas'))
-                          ->paginate(3);
+                          ->select('thesis_seminars.id', 'thesis_seminars.registered_at', 'thesis_seminars.seminar_at', 'thesis_seminars.status', DB::raw('(CASE WHEN thesis_seminars.status = 10 THEN '. "'Submitted'".' 
+                            WHEN thesis_seminars.status = 20 THEN '."'Scheduled'".' WHEN thesis_seminars.status = 30 THEN '."'Finished'".' WHEN thesis_seminars.status = 40 THEN '."'Failed'".' END) AS status_semhas'))
+                          ->paginate(5);
 
         return view('backend.thesis_seminar.index', compact('thesisseminars'));
     }
     
     public function create()
     {
-      $nim = Auth::user()->username;
-      $student = DB::table('theses')
-                //->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.id')
-                //->join('thesis_proposals', 'theses.id', '=', 'thesis_proposals.thesis_id')
-                ->join('students', 'theses.student_id', '=', 'students.id')
-                ->select('theses.id')->where('students.nim', '=', $nim)
-                ->get();
+        $nim = Auth::user()->username;
+        $statuss = DB::table('thesis_proposals') 
+        ->join('theses', 'thesis_proposals.thesis_id', '=', 'theses.id')
+        ->join('students', 'theses.student_id', '=', 'students.id')
+        ->select('thesis_proposals.status')->where('students.nim', '=', $nim)
+        ->get();
+
+        foreach($statuss as $status)
+        {
+            foreach($status as $st)
+            {
+                if($st == 30)
+                {
+                    $student = DB::table('theses')
+                            ->join('students', 'theses.student_id', '=', 'students.id')
+                            ->select('theses.id')->where('students.nim', '=', $nim)
+                            ->get();
       
-        //var_dump($student[0]);
-        /*$rekomendasi = DB::table('ta_semhas')
-                    ->select('rekomendasi', DB::raw('(CASE WHEN rekomendasi = 1 THEN '. "'Mengulang Seminar'" .'WHEN rekomendasi = 2 THEN '. "'Lanjut Sidang dengan Revisi'".'WHEN rekomendasi = 3 THEN '."'Lanjut Sidang Tanpa Revisi'".'END) AS rekomendasi_semhas'))
-                    ->distinct()
-                    ->pluck('rekomendasi_semhas','rekomendasi');*/
-      return view('backend.thesis_seminar.create', compact('student'));
+                    return view('backend.thesis_seminar.create', compact('student'));
+                }
+                elseif($st != 30)
+                {
+                    session()->flash('flash_success', 'Gagal membuat pengajuan. Anda belum melaksanakan seminar proposal.');
+                    return redirect()->route('admin.semhas.index');
+                }
+            }
+        }
     }
 
     public function store(Request $request)
@@ -72,7 +86,9 @@ class ThesisSeminarController extends Controller
                 ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
                 ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
                 ->join('students', 'theses.student_id', '=', 'students.id')
-                ->select('thesis_proposals.id','students.name AS student_name','thesis_seminars.registered_at AS registered_time','thesis_seminars.seminar_at AS seminar_time','thesis_seminars.status','thesis_seminars.recommendation','thesis_seminars.file_report AS file_reports', DB::raw('(CASE WHEN thesis_seminars.status = 1 THEN '. "'Mengajukan'" .' WHEN thesis_seminars.status = 2 THEN '."'Disetujui'".'END) AS status_semhas'))
+                ->select('thesis_proposals.id','students.name AS student_name','thesis_seminars.registered_at AS registered_time','thesis_seminars.seminar_at AS seminar_time','thesis_seminars.status','thesis_seminars.recommendation','thesis_seminars.file_report AS file_reports', 
+                  DB::raw('(CASE WHEN thesis_seminars.status = 10 THEN '. "'Submitted'".' 
+                  WHEN thesis_seminars.status = 20 THEN '."'Scheduled'".' WHEN thesis_seminars.status = 30 THEN '."'Finished'".' WHEN thesis_seminars.status = 40 THEN '."'Failed'".' END) AS status_semhas'))
                 ->where('thesis_seminars.id','=',$id)
                 ->get();
 
@@ -100,7 +116,7 @@ class ThesisSeminarController extends Controller
         {
             foreach($status as $st)
             {
-                if($st == 1)
+                if($st == 10)
                 {
                     $a = DB::table('thesis_sem_audiences')->where('thesis_seminar_id','=',$id);
                     $a->delete();
@@ -111,7 +127,7 @@ class ThesisSeminarController extends Controller
                     session()->flash('flash_success', 'Berhasil membatalkan pengajuan semhas');
                     return redirect()->route('admin.semhas.index');
             }
-                elseif($st != 1)
+                elseif($st != 10)
                 {
                     session()->flash('flash_success', 'Gagal membatalkan pengajuan. Pengajuan telah disetujui.');
                     return redirect()->route('admin.semhas.index');
@@ -132,7 +148,7 @@ class ThesisSeminarController extends Controller
         {
             foreach($status as $st)
             {
-                if($st == 1)
+                if($st == 10)
                 {
                     $semhas = ThesisSeminar::findOrFail($id);
                     $nim = Auth::user()->username;
@@ -145,7 +161,7 @@ class ThesisSeminarController extends Controller
         
                     return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id'));
                 }
-                elseif($st != 1)
+                elseif($st != 10)
                 {
                     session()->flash('flash_success', 'Gagal mengubah data pengajuan. Pengajuan telah disetujui.');
                     return redirect()->route('admin.semhas.index');

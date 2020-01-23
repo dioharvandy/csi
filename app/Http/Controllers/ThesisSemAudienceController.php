@@ -10,13 +10,32 @@ class ThesisSemAudienceController extends Controller
 {
     public function index($id)
     {
-        $semhass=DB::table('thesis_seminars')
-                   ->join('thesis_sem_audiences','thesis_seminars.id','=','thesis_sem_audiences.thesis_seminar_id')
-                   ->join('students','thesis_sem_audiences.student_id','=','students.id')
-                   ->select('thesis_sem_audiences.id','students.nim','students.name','thesis_sem_audiences.student_id')
-                   ->where('thesis_seminars.id','=', $id)
-                   ->paginate(20);
-        return view('backend.thesissem_audience.index', compact('semhass', 'id'));
+        $statuss = DB::table('thesis_seminars') 
+                  ->select('thesis_seminars.status')
+                  ->where('thesis_seminars.id','=', $id)
+                  ->get();
+
+        foreach($statuss as $status)
+        {
+            foreach($status as $st)
+            {
+                if($st != 10)
+                {
+                    $semhass=DB::table('thesis_seminars')
+                            ->join('thesis_sem_audiences','thesis_seminars.id','=','thesis_sem_audiences.thesis_seminar_id')
+                            ->join('students','thesis_sem_audiences.student_id','=','students.id')
+                            ->select('thesis_sem_audiences.id','students.nim','students.name','thesis_sem_audiences.student_id')
+                            ->where('thesis_seminars.id','=', $id)
+                            ->paginate(20);
+                    return view('backend.thesissem_audience.index', compact('semhass', 'id'));
+                }
+                elseif($st == 10)
+                {
+                    session()->flash('flash_success', 'Anda belum melakukan semhas.');
+                    return redirect()->route('admin.semhas.index');
+                }
+            }
+        }
     }
     public function create($id)
     {
