@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\ThesisSeminar;
+use App\ThesisSemAudience;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -24,16 +25,23 @@ class ThesisSeminarController extends Controller
     {
         $nim = Auth::user()->username;
         $statuss = DB::table('thesis_proposals') 
-        ->join('theses', 'thesis_proposals.thesis_id', '=', 'theses.id')
-        ->join('students', 'theses.student_id', '=', 'students.id')
-        ->select('thesis_proposals.status')->where('students.nim', '=', $nim)
-        ->get();
+                ->join('theses', 'thesis_proposals.thesis_id', '=', 'theses.id')
+                ->join('students', 'theses.student_id', '=', 'students.id')
+                ->select('thesis_proposals.status')->where('students.nim', '=', $nim)
+                ->get();
 
+        $count = DB::table('thesis_sem_audiences')
+                ->join('students','thesis_sem_audiences.student_id','=','students.id')
+                ->select('student_id')->where('students.nim', '=', $nim)
+                ->count();
+
+        //var_dump($count);
+    
         foreach($statuss as $status)
         {
             foreach($status as $st)
             {
-                if($st == 30)
+                if($st == 30 && $count >= 7)
                 {
                     $student = DB::table('theses')
                             ->join('students', 'theses.student_id', '=', 'students.id')
@@ -43,6 +51,11 @@ class ThesisSeminarController extends Controller
                     return view('backend.thesis_seminar.create', compact('student'));
                 }
                 elseif($st != 30)
+                {
+                    session()->flash('flash_success', 'Gagal membuat pengajuan. Anda belum melaksanakan seminar proposal.');
+                    return redirect()->route('admin.semhas.index');
+                }
+                elseif($count < 7)
                 {
                     session()->flash('flash_success', 'Gagal membuat pengajuan. Anda belum melaksanakan seminar proposal.');
                     return redirect()->route('admin.semhas.index');
@@ -98,8 +111,7 @@ class ThesisSeminarController extends Controller
                     ->select('lecturers.name AS reviewer_name')
                     ->where('thesis_seminars.id','=',$id)
                     ->get();
-
-        //$reviewer = $reviewer[0];          
+      
         $thesisseminars = $thesisseminars[0];
   
         return view('backend.thesis_seminar.show', compact('thesisseminars', 'reviewer'));
