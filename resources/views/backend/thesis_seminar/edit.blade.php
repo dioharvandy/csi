@@ -3,7 +3,7 @@
 @section('breadcrumb')
     {!! cui_breadcrumb([
         'Home' => route('admin.home'),
-        'Semhas' => url('/thesis_seminar'),
+        'Thesis Seminar' => url('/thesis_seminar'),
         'Edit' => '#'
     ]) !!}
 @endsection
@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-
+            
                 {{Form::model($semhas, ['route' => ['admin.semhas.update', $semhas->id], 'method' => 'patch', 'enctype' => 'multipart/form-data']) }}
 
                 {{-- CARD HEADER --}}

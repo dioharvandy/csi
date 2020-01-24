@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use App\ThesisSeminar;
-use App\ThesisSemAudience;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -11,12 +10,15 @@ class ThesisSeminarController extends Controller
 {
     public function index()
     {
+        $nim = Auth::user()->username;
         $thesisseminars = DB::table('thesis_seminars')
-                          ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
-                          ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
-                          ->select('thesis_seminars.id', 'thesis_seminars.registered_at', 'thesis_seminars.seminar_at', 'thesis_seminars.status', DB::raw('(CASE WHEN thesis_seminars.status = 10 THEN '. "'Submitted'".' 
-                            WHEN thesis_seminars.status = 20 THEN '."'Scheduled'".' WHEN thesis_seminars.status = 30 THEN '."'Finished'".' WHEN thesis_seminars.status = 40 THEN '."'Failed'".' END) AS status_semhas'))
-                          ->paginate(5);
+                        ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
+                        ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
+                        ->join('students', 'theses.student_id', '=', 'students.id')
+                        ->select('thesis_seminars.id', 'thesis_seminars.registered_at', 'thesis_seminars.seminar_at', 'thesis_seminars.status', DB::raw('(CASE WHEN thesis_seminars.status = 10 THEN '. "'Submitted'".' 
+                        WHEN thesis_seminars.status = 20 THEN '."'Scheduled'".' WHEN thesis_seminars.status = 30 THEN '."'Finished'".' WHEN thesis_seminars.status = 40 THEN '."'Failed'".' END) AS status_semhas'))
+                        ->where('students.nim', '=', $nim)
+                        ->paginate(3);
 
         return view('backend.thesis_seminar.index', compact('thesisseminars'));
     }
@@ -34,8 +36,6 @@ class ThesisSeminarController extends Controller
                 ->join('students','thesis_sem_audiences.student_id','=','students.id')
                 ->select('student_id')->where('students.nim', '=', $nim)
                 ->count();
-
-        //var_dump($count);
     
         foreach($statuss as $status)
         {
@@ -50,15 +50,17 @@ class ThesisSeminarController extends Controller
       
                     return view('backend.thesis_seminar.create', compact('student'));
                 }
+                elseif($st != 30 && $count < 7)
+                {
+                    return redirect()->route('admin.semhas.index')->with('message', 'Gagal membuat pengajuan. Anda belum menghadiri seminar hasil minimal 7 kali dan belum melaksanakan seminar proposal.');
+                }
                 elseif($st != 30)
                 {
-                    session()->flash('flash_success', 'Gagal membuat pengajuan. Anda belum melaksanakan seminar proposal.');
-                    return redirect()->route('admin.semhas.index');
+                    return redirect()->route('admin.semhas.index')->with('message', 'Gagal membuat pengajuan. Anda belum melaksanakan seminar proposal.');
                 }
                 elseif($count < 7)
                 {
-                    session()->flash('flash_success', 'Gagal membuat pengajuan. Anda belum melaksanakan seminar proposal.');
-                    return redirect()->route('admin.semhas.index');
+                    return redirect()->route('admin.semhas.index')->with('message', 'Gagal membuat pengajuan. Anda belum menghadiri seminar hasil minimal 7 kali.');
                 }
             }
         }
@@ -84,13 +86,7 @@ class ThesisSeminarController extends Controller
                 $semhas->file_report = $filepath;
             }
             $semhas->save();
-            return redirect()->route('admin.semhas.show', [$semhas->id]);
-            // if($semhas->save()) {
-            //     session()->flash('flash_success', 'Berhasil menambahkan pengajuan semhas baru');
-                
-            //     return redirect()->route('admin.semhas.show', [$semhas->id]);
-            // }
-            // return redirect()->back()->withErrors();
+            return redirect()->route('admin.semhas.show', [$semhas->id])->with('message', 'Berhasil menambahkan pengajuan semhas baru');
     }
 
     public function show($id)
@@ -113,36 +109,40 @@ class ThesisSeminarController extends Controller
                     ->get();
       
         $thesisseminars = $thesisseminars[0];
-  
         return view('backend.thesis_seminar.show', compact('thesisseminars', 'reviewer'));
     }
 
     public function destroy($id)
     {
+        //Cek status persetujuan admin
         $statuss = DB::table('thesis_seminars') 
                   ->select('thesis_seminars.status')
                   ->where('thesis_seminars.id','=', $id)
                   ->get();
-        //echo $status;
+        
         foreach($statuss as $status)
         {
             foreach($status as $st)
             {
                 if($st == 10)
                 {
+                    $semhas = ThesisSeminar::findOrFail($id);
                     $a = DB::table('thesis_sem_audiences')->where('thesis_seminar_id','=',$id);
                     $a->delete();
                     $b = DB::table('thesis_sem_reviewers')->where('thesis_seminar_id','=',$id);
                     $b->delete();
                     $thesisseminars = DB::table('thesis_seminars')->where('thesis_seminars.id','=',$id);
                     $thesisseminars->delete();
-                    session()->flash('flash_success', 'Berhasil membatalkan pengajuan semhas');
-                    return redirect()->route('admin.semhas.index');
+                    if (\Storage::exists($semhas->file_report)) 
+                    {
+                        \Storage::delete($semhas->file_report);
+                    }
+        
+                    return redirect()->route('admin.semhas.index')->with('message', 'Berhasil membatalkan pengajuan semhas');
             }
                 elseif($st != 10)
                 {
-                    session()->flash('flash_success', 'Gagal membatalkan pengajuan. Pengajuan telah disetujui.');
-                    return redirect()->route('admin.semhas.index');
+                    return redirect()->route('admin.semhas.index')->with('message', 'Gagal membatalkan pengajuan. Pengajuan telah disetujui.');
                 }
             }
         }
@@ -155,7 +155,7 @@ class ThesisSeminarController extends Controller
                   ->select('thesis_seminars.status')
                   ->where('thesis_seminars.id','=', $id)
                   ->get();
-        //echo $status;
+        
         foreach($statuss as $status)
         {
             foreach($status as $st)
@@ -166,21 +166,17 @@ class ThesisSeminarController extends Controller
                     $nim = Auth::user()->username;
                     $student = DB::table('theses')
                             ->join('thesis_seminars', 'thesis_seminars.thesis_id', '=', 'theses.id')
-                            //->join('thesis_proposals', 'theses.id', '=', 'thesis_proposals.thesis_id')
-                            //->join('students', 'theses.student_id', '=', 'students.id')
                             ->select('theses.id')->where('thesis_seminars.id', '=', $id)
                             ->get();
-        
+                
                     return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id'));
                 }
                 elseif($st != 10)
                 {
-                    session()->flash('flash_success', 'Gagal mengubah data pengajuan. Pengajuan telah disetujui.');
-                    return redirect()->route('admin.semhas.index');
+                    return redirect()->route('admin.semhas.index')->with('message', 'Gagal mengubah data pengajuan. Pengajuan telah disetujui.');
                 }
             }
         }
-        
     }
 
     public function update (Request $request, $id) {
@@ -193,24 +189,21 @@ class ThesisSeminarController extends Controller
 
         $semhas->thesis_id = $request->thesis_id;
       
-            if($request->hasFile('file_report') && $request->file('file_report')->isValid())
+        if($request->hasFile('file_report') && $request->file('file_report')->isValid())
+        {
+            if (\Storage::exists($semhas->file_report)) 
             {
-                if (\Storage::exists($semhas->file_report)) 
-                {
-                         \Storage::delete($semhas->file_report);
-                }
-                $filename = uniqid('laporan-');
-                $fileext = $request->file('file_report')->extension();
-                $filenameext = $filename.'.'.$fileext;
-                $filepath = $request->file_report->storeAs('public/laporan_ta',$filenameext);
-                $semhas->file_report = $filepath;
+                \Storage::delete($semhas->file_report);
             }
-            $semhas->save();
-            return redirect()->route('admin.semhas.show', [$semhas->id]);
-            // if ($thesisseminars->save()) {
-            //     session()->flash('flash_success','Berhasil memperbaharui data semhas');
-            //     return redirect()->route('admin.semhas.show', [$semhas->id]);
-            //     }
-            // return redirect()->route('admin.semhas.show');
+            $filename = uniqid('laporan-');
+            $fileext = $request->file('file_report')->extension();
+            $filenameext = $filename.'.'.$fileext;
+            $filepath = $request->file_report->storeAs('public/laporan_ta',$filenameext);
+            $semhas->file_report = $filepath;
         }
+    
+        if($semhas->save()) {
+            return redirect()->route('admin.semhas.show', [$semhas->id])->with('message', 'Berhasil memperbaharui data semhas');
+        }
+    }
 }

@@ -11,9 +11,9 @@ class ThesisSemAudienceController extends Controller
     public function index($id)
     {
         $statuss = DB::table('thesis_seminars') 
-                  ->select('thesis_seminars.status')
-                  ->where('thesis_seminars.id','=', $id)
-                  ->get();
+                ->select('thesis_seminars.status')
+                ->where('thesis_seminars.id','=', $id)
+                ->get();
 
         foreach($statuss as $status)
         {
@@ -31,8 +31,7 @@ class ThesisSemAudienceController extends Controller
                 }
                 elseif($st == 10)
                 {
-                    session()->flash('flash_success', 'Anda belum melakukan semhas.');
-                    return redirect()->route('admin.semhas.index');
+                    return redirect()->route('admin.semhas.index')->with('message', 'Anda belum melaksanakan seminar hasil');
                 }
             }
         }
@@ -40,7 +39,6 @@ class ThesisSemAudienceController extends Controller
     public function create($id)
     {
         $students = Student::all()->pluck('name','id');
-        //var_dump($id);
     	return view('backend.thesissem_audience.create',compact('students','id'));
     }
     public function store(Request $request)
@@ -49,25 +47,19 @@ class ThesisSemAudienceController extends Controller
             'thesis_seminar_id'=>'required',
             'student_id' => 'required' 
         ]);
-        //dd($request);
-    		$pesertas = new ThesisSemAudience();
-            $pesertas->thesis_seminar_id = $request->input('thesis_seminar_id');
-            $pesertas->student_id = $request->input('student_id');
+        
+    	$pesertas = new ThesisSemAudience();
+        $pesertas->thesis_seminar_id = $request->input('thesis_seminar_id');
+        $pesertas->student_id = $request->input('student_id');
+        $pesertas->save();
 
-            $pesertas->save();
-            return redirect()->route('admin.pesertasemhas.index',[$pesertas->thesis_seminar_id]);
-            
-            // if($pesertas->save()){
-            //     return redirect()->route('admin.pesertasemhas.index',[$request->input('thesis_seminar_id')]);
-            // }
-            // return redirect()->back()->withErrors(); 
+        return redirect()->route('admin.pesertasemhas.index',[$pesertas->thesis_seminar_id])->with('message', 'Berhasil menambahkan peserta seminar');
     }
     
     public function destroy($id)
     {
         $semhass = ThesisSemAudience::find($id);
         $semhass->delete();
-        session()->flash('flash_success', 'Berhasil menghapus data peserta');
-        return redirect()->route('admin.pesertasemhas.index',[$semhass->thesis_seminar_id]);
+        return redirect()->route('admin.pesertasemhas.index',[$semhass->thesis_seminar_id])->with('message', 'Berhasil menghapus data peserta seminar');
     }
 }

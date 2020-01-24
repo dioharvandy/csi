@@ -26,7 +26,11 @@
 
                 {{-- CARD BODY--}}
                 <div class="card-body">  
-
+                    @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                    @endif
                     {{ Form::model($thesisseminars, []) }}
 
                     <div class="form-group">
