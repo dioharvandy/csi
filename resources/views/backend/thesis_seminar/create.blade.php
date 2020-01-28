@@ -17,15 +17,36 @@
         <div class="col-md-12">
             <div class="card">
 
+            {{-- CARD HEADER --}}
+            <div class="card-header">
+                Pengajuan Semhas
+            </div>
+                
+            {{-- CARD BODY --}}
+            <div class="card-body">
+                {{ Form::model($info, []) }}
+                <div class="form-group">
+                    <label for="student"><strong>Nama Mahasiswa</strong></label>
+                    {{ Form::text('student_name', null, ['class' => 'form-control-plaintext', 'id' => 'student_name', 'readonly' => 'readonly']) }}
+                </div>
+                <div class="form-group">
+                    <label for="title"><strong>Judul TA</strong></label>
+                    {{ Form::text('title', null, ['class' => 'form-control-plaintext', 'id' => 'title', 'readonly' => 'readonly']) }}
+                </div>
+                <div class="form-group">
+                        <label for="supervisor_name"><strong>Pembimbing</strong></label>
+                    @foreach($sv as $s)
+                        {{ Form::text('lecturer_name', $s->lecturer_name, ['class' => 'form-control-plaintext', 'id' => 'lecturer_name', 'readonly' => 'readonly']) }}
+            
+                    @endforeach
+                </div>
+                {{ Form::close() }}
+
                 {{ Form::open(['route' => 'admin.semhas.store', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
                 {{ csrf_field() }}
-                {{-- CARD HEADER --}}
-                <div class="card-header">
-                    Pengajuan Semhas
-                </div>
 
                 {{-- CARD BODY --}}
-                <div class="card-body">
+                <div>
                     @include('backend.thesis_seminar._form')
                 </div>
 
@@ -35,7 +56,7 @@
                     <input type="submit" value="Simpan" class="btn btn-primary"/>
                 </div>
 
-                {{ Form::close() }}
+            {{ Form::close() }}
             </div>
         </div>
     </div>

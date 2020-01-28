@@ -26,7 +26,6 @@ Route::get('/thesis_seminar/{id}', 'ThesisSeminarController@show')->name('admin.
 Route::get('/thesis_seminar/{thesisseminars}/edit', 'ThesisSeminarController@edit')->name('admin.semhas.edit');  //routing tampilkan form edit semhas
 
 /** Routing Pengelolaan Peserta Semhas */
-Route::get('/admin/pesertasemhas/{id}/add', 'ThesisSemAudienceController@create')->name('admin.pesertasemhas.create'); //routing tampilkan form data semhas 
 Route::get('/thesissem_audience/{id}', 'ThesisSemAudienceController@index')->name('admin.pesertasemhas.index');  //routing lihat daftar peserta semhas
 Route::post('/admin/pesertasemhas', 'ThesisSemAudienceController@store')->name('admin.pesertasemhas.store'); //routing simpan data peserta semhas
 Route::delete('/admin/pesertasemhas/{id}', 'ThesisSemAudienceController@destroy')->name('admin.pesertasemhas.destroy'); //routing hapus data peserta semhas 

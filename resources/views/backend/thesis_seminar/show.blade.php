@@ -9,9 +9,10 @@
 @endsection
 
 @section('toolbar')
-   
-    {!! cui_toolbar_btn(url('/thesis_seminar'), 'icon-list', 'Daftar Semhas') !!}
+    {!! cui_toolbar_btn(route('admin.semhas.edit', [$thesisseminars->id]), 'icon-pencil', 'Edit Semhas') !!}
+    {!! cui_toolbar_btn_delete(route('admin.semhas.destroy', [$thesisseminars->id]), $thesisseminars->id, 'icon-trash', 'Hapus Semhas', 'Anda yakin akan membatalkan pengajuan semhas ini?') !!}
     {!! cui_toolbar_btn(url('/thesis_seminar/create'), 'icon-plus', 'Ajukan Semhas') !!}
+    {!! cui_toolbar_btn(url('/thesis_seminar'), 'icon-list', 'Daftar Semhas') !!}
 @endsection
 
 @section('content')

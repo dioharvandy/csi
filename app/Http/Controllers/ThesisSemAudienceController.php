@@ -10,10 +10,27 @@ class ThesisSemAudienceController extends Controller
 {
     public function index($id)
     {
+        $students = Student::all()->pluck('name','id');
         $statuss = DB::table('thesis_seminars') 
                 ->select('thesis_seminars.status')
                 ->where('thesis_seminars.id','=', $id)
                 ->get();
+        $thesisseminars = DB::table('thesis_seminars')
+                    ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
+                    ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
+                    ->join('students', 'theses.student_id', '=', 'students.id')
+                    ->select('thesis_seminars.id','students.name AS student_name','thesis_seminars.seminar_at AS seminar_time') 
+                    ->where('thesis_seminars.id','=',$id)
+                    ->get();
+
+        $reviewer = DB::table('thesis_seminars')
+                    ->join('thesis_sem_reviewers', 'thesis_seminars.id', '=', 'thesis_sem_reviewers.thesis_seminar_id')
+                    ->join('lecturers', 'thesis_sem_reviewers.reviewer_id', '=', 'lecturers.id')
+                    ->select('lecturers.name AS reviewer_name')
+                    ->where('thesis_seminars.id','=',$id)
+                    ->get();
+      
+        $thesisseminars = $thesisseminars[0];
 
         foreach($statuss as $status)
         {
@@ -27,7 +44,7 @@ class ThesisSemAudienceController extends Controller
                             ->select('thesis_sem_audiences.id','students.nim','students.name','thesis_sem_audiences.student_id')
                             ->where('thesis_seminars.id','=', $id)
                             ->paginate(20);
-                    return view('backend.thesissem_audience.index', compact('semhass', 'id'));
+                    return view('backend.thesissem_audience.index', compact('students', 'thesisseminars', 'reviewer', 'semhass', 'id'));
                 }
                 elseif($st == 10)
                 {
@@ -36,11 +53,7 @@ class ThesisSemAudienceController extends Controller
             }
         }
     }
-    public function create($id)
-    {
-        $students = Student::all()->pluck('name','id');
-    	return view('backend.thesissem_audience.create',compact('students','id'));
-    }
+   
     public function store(Request $request)
     {
     	$request->validate([

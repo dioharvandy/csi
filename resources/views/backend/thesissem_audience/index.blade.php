@@ -8,23 +8,59 @@
     ]) !!}
 @endsection
 
-@section('toolbar')
-{!! cui_toolbar_btn(route('admin.pesertasemhas.create', [$id]), 'icon-plus', 'Tambah Peserta Semhas') !!}  
-@endsection
-
 @section('content')
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
 
+            {{ Form::open(['route' => 'admin.pesertasemhas.store', 'method' => 'post']) }}
+                {{ csrf_field() }}
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-                    Daftar Peserta Semhas
+                    Informasi Semhas
                 </div>
 
                 {{-- CARD BODY--}}
                 <div class="card-body">
+                    
+                    {{ Form::model($thesisseminars, []) }}
 
+                    <div class="form-group">
+                        <label for="student"><strong>Nama Mahasiswa</strong></label>
+                        {{ Form::text('student_name', null, ['class' => 'form-control-plaintext', 'id' => 'student_name', 'readonly' => 'readonly']) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="jam"><strong>Jadwal Seminar</strong></label>
+                        {{ Form::input('timestamp','seminar_time', null, ['class' => 'form-control-plaintext', 'id' => 'seminar_time', 'readonly' => 'readonly']) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewer_name"><strong>Penguji</strong></label>
+                    @foreach($reviewer as $r)
+                        {{ Form::text('reviewer_name', $r->reviewer_name, ['class' => 'form-control-plaintext', 'id' => 'reviewer_name', 'readonly' => 'readonly']) }}
+            
+                    @endforeach
+                    </div>
+            </div>
+
+            <div class="card">    
+                
+                {{-- CARD HEADER--}}
+                <div class="card-header">
+                   Daftar Peserta Semhas
+                </div>
+
+                {{-- CARD BODY--}}
+                    
+                    <div class="card-body">
+                    @if (session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                        @include('backend.thesissem_audience._form')
+                        <input type="submit" value="Simpan" class="btn btn-primary"/>
+                    </div>
+                    {{ Form::close() }}
                     <div class="row justify-content-end">
                         <div class="col-md-6 text-right">
                             
@@ -36,11 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (session('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                    @endif
+                    
                     <table class="table table-striped">
                         <thead>
                         <tr>

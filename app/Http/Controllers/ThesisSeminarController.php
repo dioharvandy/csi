@@ -36,19 +36,36 @@ class ThesisSeminarController extends Controller
                 ->join('students','thesis_sem_audiences.student_id','=','students.id')
                 ->select('student_id')->where('students.nim', '=', $nim)
                 ->count();
-    
+        
+        $student = DB::table('theses')
+                ->join('students', 'theses.student_id', '=', 'students.id')
+                ->select('theses.id')->where('students.nim', '=', $nim)
+                ->get();
+      
+        $info = DB::table('theses')
+                ->join('students', 'theses.student_id', '=', 'students.id')
+                ->join('thesis_supervisors', 'theses.id', '=', 'thesis_supervisors.thesis_id')
+                ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
+                ->select('students.name AS student_name', 'theses.title')
+                ->where('students.nim', '=', $nim)
+                ->get();
+        $info = $info[0];
+        
+        $sv = DB::table('theses')
+            ->join('students', 'theses.student_id', '=', 'students.id')    
+            ->join('thesis_supervisors', 'theses.id', '=', 'thesis_supervisors.thesis_id')
+            ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
+            ->select('lecturers.name AS lecturer_name')
+            ->where('students.nim', '=', $nim)
+            ->get();
+        
         foreach($statuss as $status)
         {
             foreach($status as $st)
             {
                 if($st == 30 && $count >= 7)
                 {
-                    $student = DB::table('theses')
-                            ->join('students', 'theses.student_id', '=', 'students.id')
-                            ->select('theses.id')->where('students.nim', '=', $nim)
-                            ->get();
-      
-                    return view('backend.thesis_seminar.create', compact('student'));
+                    return view('backend.thesis_seminar.create', compact('student', 'info', 'sv'));
                 }
                 elseif($st != 30 && $count < 7)
                 {
@@ -95,7 +112,7 @@ class ThesisSeminarController extends Controller
                 ->join('theses', 'thesis_seminars.thesis_id', '=', 'theses.thesis_id')
                 ->join('thesis_proposals', 'theses.thesis_id', '=', 'thesis_proposals.thesis_id')
                 ->join('students', 'theses.student_id', '=', 'students.id')
-                ->select('thesis_proposals.id','students.name AS student_name','thesis_seminars.registered_at AS registered_time','thesis_seminars.seminar_at AS seminar_time','thesis_seminars.status','thesis_seminars.recommendation','thesis_seminars.file_report AS file_reports', 
+                ->select('thesis_seminars.id','students.name AS student_name','thesis_seminars.registered_at AS registered_time','thesis_seminars.seminar_at AS seminar_time','thesis_seminars.status','thesis_seminars.recommendation','thesis_seminars.file_report AS file_reports', 
                   DB::raw('(CASE WHEN thesis_seminars.status = 10 THEN '. "'Submitted'".' 
                   WHEN thesis_seminars.status = 20 THEN '."'Scheduled'".' WHEN thesis_seminars.status = 30 THEN '."'Finished'".' WHEN thesis_seminars.status = 40 THEN '."'Failed'".' END) AS status_semhas'))
                 ->where('thesis_seminars.id','=',$id)
@@ -109,6 +126,7 @@ class ThesisSeminarController extends Controller
                     ->get();
       
         $thesisseminars = $thesisseminars[0];
+        
         return view('backend.thesis_seminar.show', compact('thesisseminars', 'reviewer'));
     }
 
