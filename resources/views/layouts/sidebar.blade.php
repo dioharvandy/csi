@@ -11,7 +11,7 @@
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
                     <i class="nav-icon icon-people"></i> Pengelolaan Sivitas</a>
-                <ul class="nav-dropdown-items">
+                
 
                     {{-- Menu Dosen--}}
                     {{-- <li class="nav-item">
@@ -23,11 +23,11 @@
                     {{-- Menu Mahasiswa--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/attendance') }}">
-                            <i class="nav-icon"></i> Absensi
+                            <i class="nav-icon"></i> Attendance
                         </a>
                     </li>
 
-                </ul>
+                
             </li>
 
 

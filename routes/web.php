@@ -16,7 +16,7 @@ Auth::routes();
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/lecturer', 'backend\LecturerController@index');
-    Route::resource('/attendance', 'AttendanceStudentController');
+    Route::resource('/attendance', 'AttendanceController');
 
     Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
 

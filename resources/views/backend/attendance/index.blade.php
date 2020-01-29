@@ -24,25 +24,18 @@
                 <div class="card-header">
                     {!! Form::open(['method' => 'GET', 'url' => '/attendance', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="form-row align-items-center">
-                          <div class="col-auto my-1">
+                          <div class="col-auto">
                             <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
                             <select name="semester" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                              <option selected>Semester</option>
-
                               @foreach($semester as $sems)
-                              <option value="{{$sems->id}}">{{ $sems->period}}</option>
+                              <option value="{{$sems->id}}">{{$sems->year}} @if($sems->period == 1)Ganjil @else Genap @endif</option>
                               @endforeach
-                              
                             </select>
-                          </div>
-                          <div class="col">
-                            <input name="matkul" type="text" class="form-control" placeholder="Mata Kuliah">
                           </div>
                           <div class="col-auto my-1">
                             <button type="submit" class="btn btn-primary">Search</button>
                           </div>
                         </div>
-                      </form>
                       {!! Form::close() !!}
                 </div>
 
