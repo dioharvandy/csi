@@ -59,13 +59,25 @@
                                     <a href="{{route('student.theses.show', [$supervisor->thesis_id] )}}" class="btn btn-primary">Detail</a>
                                 </td>
                                 <td class="text-center">
-                                        <a href=" {{route('admin.supervisor.accepted', [$supervisor->thesis_id] )}} " onclick="confirmed()" class="btn btn-sm btn-outline-info">
-                                            <i class="fa fa-thumbs-up"></i>
-                                        </a>
 
-                                        <a href=" {{route('admin.supervisor.rejected', [$supervisor->thesis_id] )}} " onclick="confirmed()" class="btn btn-sm btn-outline-danger">
+                                        {{-- <a href=" {{route('admin.supervisor.accepted', [$supervisor->thesis_id] )}} " onclick="confirmed()" class="btn btn-sm btn-outline-info">
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </a> --}}                                    
+                                        {!! Form::open(['model' => 'POST', 'route' => ['admin.supervisor.accepted', $supervisor->thesis_id] ]) !!}
+                                            <button type="submit" onclick="confirmed()"  class="btn btn-sm btn-outline-info" >
+                                                    <i class="fa fa-thumbs-up"></i>
+                                            </button>
+                                        {!! Form::close() !!}   
+
+                                        {!! Form::open(['model' => 'POST', 'route' => ['admin.supervisor.rejected', $supervisor->thesis_id] ]) !!}
+                                            <button type="submit" onclick="confirmed()"  class="btn btn-sm btn-outline-danger" >
+                                                    <i class="fa fa-thumbs-down"></i>
+                                            </button>
+                                        {!! Form::close() !!}   
+
+                                        {{-- <a href=" {{route('admin.supervisor.rejected', [$supervisor->thesis_id] )}} " onclick="confirmed()" class="btn btn-sm btn-outline-danger">
                                             <i class="fa fa-thumbs-down"></i>
-                                        </a>
+                                        </a> --}}
                                 </td>
                             </tr>
                             <?php $n++ ?>

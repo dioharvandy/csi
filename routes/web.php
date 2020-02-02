@@ -23,8 +23,8 @@ Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 
     //Supervisor
     Route::get('/supervisor', 'ThesisSupervisorController@index')->name('admin.supervisor.index');
-    Route::get('/supervisor/accepted/{id}', 'ThesisSupervisorController@accepted')->name('admin.supervisor.accepted');
-    Route::get('/supervisor/rejected/{id}', 'ThesisSupervisorController@rejected')->name('admin.supervisor.rejected');
+    Route::post('/supervisor/accepted/{id}', 'ThesisSupervisorController@accepted')->name('admin.supervisor.accepted');
+    Route::post('/supervisor/rejected/{id}', 'ThesisSupervisorController@rejected')->name('admin.supervisor.rejected');
 
     //Tugas Akhir
     Route::get('/mahasiswa', 'ThesisController@index')->name('students.index');

@@ -42,7 +42,7 @@
                     <i class="fa fa-chalkboard-teacher"></i> <strong>Theses Supervisor</strong>
                 </div>
                 <div class="card-body">
-                    sadsad
+                    coming soon
                 </div>
             </div>
 
@@ -50,10 +50,21 @@
 
             <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-chalkboard-teacher"></i> <strong>Logbook</strong>
+                        <i class="fa fa-book"></i> <strong>Logbook</strong>
                     </div>
                     <div class="card-body">
                             <a class="btn btn-primary" href="{{route('student.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a>
+                    </div>
+                </div>
+
+            <br>
+
+            <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-file"></i> <strong>Seminar Proposal</strong>
+                    </div>
+                    <div class="card-body">
+                            {{-- <a class="btn btn-primary" href="{{route('student.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a> --}}
                     </div>
                 </div>
         </div>

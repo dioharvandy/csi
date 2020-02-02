@@ -13,6 +13,7 @@ use DB;
 
 class ThesisSupervisorController extends Controller
 {
+    // INDEX
     function index(){
         $user_id = auth()->user();
         $user = Lecturer::find($user_id)->pluck('id');
@@ -33,8 +34,9 @@ class ThesisSupervisorController extends Controller
 
         // dd($accepts->count());
         return view('backend.supervisor.index', compact('supervisors', 'accepts'));
-    }
+    } // INDEXEND
 
+    // ACCEPT-REJECT
     function accepted($id){
         $user_id = auth()->user();
         $user = Lecturer::find($user_id)->pluck('id');
@@ -44,9 +46,11 @@ class ThesisSupervisorController extends Controller
         ]);
 
         $supervisor = ThesisSupervisor::where([
+            ['thesis_id', $id],
             ['lecturer_id', $user],
-            ['thesis_id', $id]
-        ])->update(["status" => 1]);
+        ])->update([
+            "status" => 1,
+        ]);
 
         toastr()->success('Tugas Akhir sudah diterima');
         return redirect()->route('admin.supervisor.index');
@@ -60,24 +64,21 @@ class ThesisSupervisorController extends Controller
             "status" => 35,
         ]);
 
-
-        // $supervisor = ThesisSupervisor::where('lecturer_id', $user)->where('thesis_id', $id)->get();
         $supervisor = ThesisSupervisor::where([
             ['thesis_id', '=', $id],
             ['lecturer_id', '=', $user],
         ])->update(["status" => 2]);
-
-        // dd($supervisor);
         
         toastr()->error('Tugas Akhir sudah ditolak');
         return redirect()->route('admin.supervisor.index');
     }
+//ACCEPT-REJECT END
 
-    function create(Request $request){
-        $data = $request->all();
-        $supervisor = ThesisSupervisor::create($data);
-        toastr()->success('Pembimbing sudah diajukan');
-        return redirect()->route('students.index');
+    // function create(Request $request){
+    //     $data = $request->all();
+    //     $supervisor = ThesisSupervisor::create($data);
+    //     toastr()->success('Pembimbing sudah diajukan');
+    //     return redirect()->route('students.index');
         
-    }
+    // }
 }
