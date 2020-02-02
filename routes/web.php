@@ -20,8 +20,18 @@ Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 
  Route::middleware('auth')->group( function() {
     Route::get('/home', 'DashboardController@index')->name('home');
-    Route::get('/mahasiswa', 'StudentController@index')->name('admin.students.index');
-    Route::get('/mahasiswa/logbook/{id}', 'ThesisLogbookController@index')->name('admin.ta_logbook.index');
+
+    //Supervisor
+    Route::get('/supervisor', 'ThesisSupervisorController@index')->name('admin.supervisor.index');
+    Route::get('/supervisor/accepted/{id}', 'ThesisSupervisorController@accepted')->name('admin.supervisor.accepted');
+    Route::get('/supervisor/rejected/{id}', 'ThesisSupervisorController@rejected')->name('admin.supervisor.rejected');
+
+    //Tugas Akhir
+    Route::get('/mahasiswa', 'ThesisController@index')->name('students.index');
+    Route::get('/mahasiswa/logbook/{id}', 'ThesisLogbookController@index')->name('student.ta_logbook.index');
+    Route::post('/mahasiswa/store/', 'ThesisController@store')->name('student.theses.store');
+    Route::get('/mahasiswa/detail/{id}', 'ThesisController@show')->name('student.theses.show');
+    Route::post('/mahasiswa/supervisor/', 'ThesisSupervisorController@create')->name('student.supervisor.create');
  });
 
 

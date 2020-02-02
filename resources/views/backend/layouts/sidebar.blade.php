@@ -15,16 +15,20 @@
 
                     {{-- Menu Dosen--}}
                     <li class="nav-item">
-                        {{-- <a class="nav-link" href="{{ route('admin.lecturers.index') }}"> --}}
-                            <i class="nav-icon"></i> Dosen
-                        </a>
+                        @if( auth()->user()->type ==  3 )
+                            <a class="nav-link" href="{{ route('admin.supervisor.index') }}">
+                                <i class="nav-icon"></i> Dosen
+                            </a>
+                        @endif
                     </li>
 
                     {{-- Menu Mahasiswa --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.students.index') }}">
-                            <i class="nav-icon"></i> Mahasiswa
-                        </a>
+                        @if ( auth()->user()->type == 2)     
+                            <a class="nav-link" href="{{ route('students.index') }}">
+                                <i class="nav-icon"></i> Mahasiswa
+                            </a>
+                        @endif
                     </li>
 
                     {{-- Menu Tendik --}}

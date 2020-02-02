@@ -3,8 +3,7 @@
 @section('breadcrumb')
     {!! cui_breadcrumb([
         'Home' => route('home'),
-        'Mahasiswa' => route('admin.students.index'),
-        'Index' => '#'
+        'Tugas Akhir' => route('students.index'),
     ]) !!}
 @endsection
 
@@ -42,12 +41,13 @@
                             <th class="text-center">Deskripsi</th>
                             <th class="text-center">Pembimbing</th>
                             <th class="text-center">Tanggal Mulai</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Lihat Logbook</th>
+                            <th class="text-center">Tambah Pembimbing TA</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($theses as $theses)
-                            @if($theses->status == 1)
                             <?php $n = 1?>
                                 <tr>
                                     <td>{{ $n }}</td>
@@ -62,22 +62,27 @@
                                         @endforeach
                                     </td>
                                     <td class="text-center">{{ $theses->start_at }}</td>
+                                    <td class="text-center">               
+                                       @foreach ($t_statuses as $key => $val)                                           
+                                            @if ($key == $theses->status)
+                                                {{ $val }}
+                                            @endif
+                                       @endforeach
+                                    </td>
                                     <td class="text-center">
-                                        Coming soon
-                                         {{-- {!! cui_btn_view(route('admin.ta_logbook.index', [$theses->id])) !!}  --}}
-                                        {{--  {!! cui_btn_edit(route('admin.students.edit', [$theses->id])) !!}  --}}
-                                         {{-- {!! cui_btn_delete(route('admin.students.destroy', [$theses->id]), "Anda yakin akan menghapus data mahasiswa ini?") !!}  --}}
+                                        <a class="btn btn-primary" href="{{route('student.ta_logbook.index', [$theses->id])}}">Lihat</a>
+                                    </td>
+                                    <td class="text-center">
+                                        @include('backend.theses.modal')
                                     </td>
                                 </tr>
                             <?php $n = 1?>
-                            @endif
                         @endforeach
                         </tbody>
                     </table>
 
                     <div class="row justify-content-end">
                         <div class="col-md-6 text-right">
-
                         </div>
                         <div class="col-md-6 justify-content-end">
                             <div class="row justify-content-end">
@@ -85,12 +90,9 @@
                             </div>
                         </div>
                     </div>
-
+                    
                 </div><!--card-body-->
-
-
             </div><!--card-->
         </div><!--col-->
     </div><!--row-->
-
 @endsection
