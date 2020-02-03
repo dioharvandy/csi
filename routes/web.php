@@ -16,7 +16,12 @@ Auth::routes();
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/lecturer', 'backend\LecturerController@index');
-    Route::resource('/attendance', 'AttendanceController');
+    Route::get('/attendance', 'AttendanceController@index');
+    Route::get('/attendance/{id}', 'AttendanceController@show');
+    Route::patch('/attendance/student', 'AttendanceController@store');
+    Route::get('/attendance/student/{id}', 'AttendanceController@showStudent');
+    Route::get('/attendance/edit/{id}', 'AttendanceController@edit');
+    Route::patch('/attendance/edit/{id}', 'AttendanceController@update');
 
     Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
 

@@ -58,6 +58,84 @@
                                         {{ html()->text('semester', $attendance[0]->semester)->class('form-control-plaintext') }}
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                            Tambah
+                                        </button>
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Pertemuan</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['method' => 'PATCH','url' => '/attendance/student', 
+                                                                    'class' => 'form-horizontal', 'files' => true]) !!}
+                                                    {{ Form::hidden('class_lecturer_id', $attendance[0]->clectr_id) }}
+                                                    @include ('backend.attendance.create')
+                            
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                Edit
+                                            </button>
+                                            
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Daftar Pertemuan</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table">
+                                                            <thead>
+                                                              <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Tanggal</th>
+                                                                <th scope="col">Edit</th>
+                                                              </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @php $a = 1; @endphp
+                                                                @foreach($attendance as $att)
+                                                              <tr>
+                                                                <th scope="row">{{$a}}</th>
+                                                                <td>{{$att->date}}</td>
+                                                                <td>{!! cui_btn_edit(url('/attendance/edit/'. $att->id)) !!}</td>
+                                                              </tr>
+                                                              @php $a++; @endphp
+                                                              @endforeach
+                                                            </tbody>
+                                                          </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
                             </div>
 
                             {{-- ayam --}}
