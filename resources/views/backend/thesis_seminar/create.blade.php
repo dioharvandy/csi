@@ -23,26 +23,32 @@
             </div>
                 
             {{-- CARD BODY --}}
-            <div class="card-body">
+            <div class="card-body"> 
                 {{ Form::model($info, []) }}
-                <div class="form-group">
-                    <label for="student"><strong>Nama Mahasiswa</strong></label>
+                
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="student"><strong>Nama Mahasiswa</strong></label>
+                    <div class="col-sm-10">
                     {{ Form::text('student_name', null, ['class' => 'form-control-plaintext', 'id' => 'student_name', 'readonly' => 'readonly']) }}
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="title"><strong>Judul TA</strong></label>
+                <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label" for="title"><strong>Judul TA</strong></label>
+                    <div class="col-sm-10">
                     {{ Form::text('title', null, ['class' => 'form-control-plaintext', 'id' => 'title', 'readonly' => 'readonly']) }}
+                    </div>
                 </div>
-                <div class="form-group">
-                        <label for="supervisor_name"><strong>Pembimbing</strong></label>
+                <div class="form-group row">
+                        <label  class="col-sm-2 col-form-label" for="supervisor_name"><strong>Pembimbing</strong></label>
                     @foreach($sv as $s)
+                    <div class="col-sm-10">
                         {{ Form::text('lecturer_name', $s->lecturer_name, ['class' => 'form-control-plaintext', 'id' => 'lecturer_name', 'readonly' => 'readonly']) }}
-            
+                </div>
                     @endforeach
                 </div>
                 {{ Form::close() }}
 
-                {{ Form::open(['route' => 'admin.semhas.store', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+            {{ Form::open(['route' => 'admin.semhas.store', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
                 {{ csrf_field() }}
 
                 {{-- CARD BODY --}}
@@ -52,7 +58,6 @@
 
                 {{-- CARD FOOTER --}}
                 <div class="card-footer">
-                
                     <input type="submit" value="Simpan" class="btn btn-primary"/>
                 </div>
 

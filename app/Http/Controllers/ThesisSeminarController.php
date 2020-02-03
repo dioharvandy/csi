@@ -44,8 +44,6 @@ class ThesisSeminarController extends Controller
       
         $info = DB::table('theses')
                 ->join('students', 'theses.student_id', '=', 'students.id')
-                ->join('thesis_supervisors', 'theses.id', '=', 'thesis_supervisors.thesis_id')
-                ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
                 ->select('students.name AS student_name', 'theses.title')
                 ->where('students.nim', '=', $nim)
                 ->get();

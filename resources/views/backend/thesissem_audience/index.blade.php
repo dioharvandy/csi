@@ -25,20 +25,26 @@
                     
                     {{ Form::model($thesisseminars, []) }}
 
-                    <div class="form-group">
-                        <label for="student"><strong>Nama Mahasiswa</strong></label>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="student"><strong>Nama Mahasiswa</strong></label>
+                        <div class="col-sm-10">
                         {{ Form::text('student_name', null, ['class' => 'form-control-plaintext', 'id' => 'student_name', 'readonly' => 'readonly']) }}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="jam"><strong>Jadwal Seminar</strong></label>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="jam"><strong>Jadwal Seminar</strong></label>
+                        <div class="col-sm-10">
                         {{ Form::input('timestamp','seminar_time', null, ['class' => 'form-control-plaintext', 'id' => 'seminar_time', 'readonly' => 'readonly']) }}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="reviewer_name"><strong>Penguji</strong></label>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="reviewer_name"><strong>Penguji</strong></label>
                     @foreach($reviewer as $r)
+                        <div class="col-sm-10">
                         {{ Form::text('reviewer_name', $r->reviewer_name, ['class' => 'form-control-plaintext', 'id' => 'reviewer_name', 'readonly' => 'readonly']) }}
             
                     @endforeach
+                        </div>
                     </div>
             </div>
 
