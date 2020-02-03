@@ -14,10 +14,10 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    //  public function __construct()
-    //  {
-    //      $this->middleware(['permission:manage_lecturers']);
-    //  }
+     public function __construct()
+     {
+         $this->middleware(['permission:manage_lecturers']);
+     }
 
     public function index(Request $request)
     {   
