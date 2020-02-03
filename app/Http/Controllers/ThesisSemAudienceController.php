@@ -43,7 +43,7 @@ class ThesisSemAudienceController extends Controller
                             ->join('students','thesis_sem_audiences.student_id','=','students.id')
                             ->select('thesis_sem_audiences.id','students.nim','students.name','thesis_sem_audiences.student_id')
                             ->where('thesis_seminars.id','=', $id)
-                            ->paginate(20);
+                            ->paginate(10);
                     return view('backend.thesissem_audience.index', compact('students', 'thesisseminars', 'reviewer', 'semhass', 'id'));
                 }
                 elseif($st == 10)

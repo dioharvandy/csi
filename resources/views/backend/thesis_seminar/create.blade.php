@@ -43,7 +43,7 @@
                     @foreach($sv as $s)
                     <div class="col-sm-10">
                         {{ Form::text('lecturer_name', $s->lecturer_name, ['class' => 'form-control-plaintext', 'id' => 'lecturer_name', 'readonly' => 'readonly']) }}
-                </div>
+                    </div>
                     @endforeach
                 </div>
                 {{ Form::close() }}
