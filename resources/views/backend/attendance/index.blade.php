@@ -81,7 +81,7 @@
                                     {{ $att->semester}}
                                 </td>
                                 <td class="text-center">
-                                    {!! cui_btn_view(url('/attendance/'. $att->id)) !!}
+                                    {!! cui_btn_view(url('/attendance/'. $att->id.'/show')) !!}
                                 </td>
                             </tr>
                         @endforeach

@@ -12,6 +12,23 @@
     @stack('before-styles')
     <link href="{{ mix('css/backend.css') }}" rel="stylesheet" >
     @stack('after-styles')
+    <style>
+        .buttonancak{
+            align-items: center;
+            border-radius: 500px;
+            bottom: 16px;
+            cursor: pointer;
+            display: flex;
+            height: 64px;
+            justify-content: center;
+            min-width: 64px;
+            position: fixed;
+            right: 16px;
+            width: fit-content;
+            color: white;
+            font-size: 32px;
+        }
+    </style>
 </head>
 
 <!-- BODY options, add following classes to body to change options

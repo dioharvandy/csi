@@ -17,7 +17,7 @@ Auth::routes();
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/lecturer', 'backend\LecturerController@index');
     Route::get('/attendance', 'AttendanceController@index');
-    Route::get('/attendance/{id}', 'AttendanceController@show');
+    Route::get('/attendance/{id}/{jenis}', 'AttendanceController@show')->name('kehadiran');
     Route::patch('/attendance/student', 'AttendanceController@store');
     Route::get('/attendance/student/{id}', 'AttendanceController@showStudent');
     Route::get('/attendance/edit/{id}', 'AttendanceController@edit');

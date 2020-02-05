@@ -62,7 +62,7 @@
                                     <div class="form-group">
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                            Tambah
+                                            <i class="fa fa-plus"></i>
                                         </button>
                                         
                                         <!-- Modal -->
@@ -92,7 +92,7 @@
                                     <div class="form-group">
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                Edit
+                                                <i class="fa fa-edit"></i>
                                             </button>
                                             
                                             <!-- Modal -->
@@ -139,33 +139,12 @@
                             </div>
 
                             {{-- ayam --}}
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">Nama Mahasiswa</th>
-                                    <th class="text-center">NIM</th>
-                                    @foreach($kolom as $att)
-                                    <th class="text-center">{{$att}}</th>
-                                    @endforeach 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($ayam as $a)
-                                        <tr>
-                                            <td class="text-center">{{$a['name']}}</td>
-                                            <td class="text-center">{{$a['nim']}}</td>
-                                            @foreach ($a['desc'] as $key => $item)
-                                                @foreach ($a['desc'] as $i)
-                                                    @if ($kolom[$key] == $i['date'])
-                                                        <td class="text-center">{{config('central.attendance_student')[$item['status']]}}</td>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                                </div>
+                            <div class="row">
+                                <a class="buttonancak btn-primary" href="{{ route('kehadiran', ['id' => Request::segment(2), 'jenis' => 'print']) }}"><i class="fa fa-print"></i></a>
+
+                                @include('backend.attendance.tabel');
+                            </div>
+                        </div>
                     <div class="row justify-content-end">
                         <div class="col-md-6 text-right">
 

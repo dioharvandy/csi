@@ -79,9 +79,9 @@ return [
     ],
 
     'attendance_student' => [
-        1 => 'Hadir',
-        2 => 'Absen',
-        3 => 'Izin',
-        4 => 'Sakit'
+        1 => 'V',
+        2 => 'X',
+        3 => 'I',
+        4 => 'S'
     ]
 ];

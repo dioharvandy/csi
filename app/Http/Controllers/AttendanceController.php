@@ -144,7 +144,7 @@ class AttendanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $jenis=null)
     {
         $attendance = DB::table('attendances')
         ->join('class_lecturers','class_lecturer_id','=','class_lecturers.id')
@@ -216,8 +216,11 @@ class AttendanceController extends Controller
         // $x = 
         // dd($date_pluck);
         // dd($student_pluck);
-        
-        return view('backend.attendance.show', compact('attendance','students','attendance_students', 'limits', 'student_pluck', 'date_pluck','ayam','kolom'));
+        if($jenis == 'print'){
+            return view('backend.attendance.tabel', compact('ayam', 'kolom'));
+        } else{
+            return view('backend.attendance.show', compact('attendance','students','attendance_students', 'limits', 'student_pluck', 'date_pluck','ayam','kolom'));
+        }
     }
 
     /**
