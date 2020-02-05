@@ -81,7 +81,7 @@
                                 </td>
                                 {{-- <td>{{ $student->name }}</td>
                                 <td class="">{{ $student->nim }}</td> --}}
-                                {!! Form::open(['url' => '/attendance/edit/'. $attendance_students[0]->id,'method' => 'PATCH',
+                                {!! Form::open(['url' => '/attendance/edit/'. $attendance_students[0]->att_id,'method' => 'PATCH',
                                 'class' => 'form-horizontal', 'files' => true]) !!}
                                 <td class="">
                                     <input type="hidden" name="id" value="{{$att_student->id}}">

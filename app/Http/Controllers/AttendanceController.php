@@ -26,8 +26,31 @@ class AttendanceController extends Controller
         $semester = DB::table('semesters')->get();
         
         if(!empty($sems)){
+            $sems = $sems;
+        }else {
+            $year = date("Y");
+            $month = date("m");
+            
+            if($month > 7){
+                $month = 1;
+            }else{
+                $month = 2;
+            }
 
-        $attendance = DB::table('semesters')
+            $limit = DB::table('semesters')
+                -> where([
+                    ['semesters.year', '=', $year], 
+                    ['semesters.period', '=', $month]])
+                -> limit(1)
+                -> get();
+            
+            foreach ($limit as $i) {
+                $sems = $i->id;
+            }
+        }
+
+
+     $attendance = DB::table('semesters')
         ->join('classrooms','classrooms.semester_id','=','semesters.id')
         ->join('class_lecturers','class_lecturers.classroom_id','=','classrooms.id')
         ->join('lecturers','class_lecturers.lecturer_id','=','lecturers.id')
@@ -37,19 +60,7 @@ class AttendanceController extends Controller
             ['semesters.id','=', $sems]
         ])
         ->paginate($perPage);
-                }
 
-        else {
-
-        $attendance = DB::table('semesters')
-        ->join('classrooms','classrooms.semester_id','=','semesters.id')
-        ->join('class_lecturers','class_lecturers.classroom_id','=','classrooms.id')
-        ->join('lecturers','class_lecturers.lecturer_id','=','lecturers.id')
-        ->join('courses','classrooms.course_id','=','courses.id')
-        ->select('courses.id','courses.name AS crs_name','courses.code','courses.semester','lecturers.name AS lecname')
-        ->paginate($perPage);
-
-     }
         return view('backend.attendance.index', compact('attendance','semester'));
 
     }
@@ -224,7 +235,7 @@ class AttendanceController extends Controller
         ->join('courses','classrooms.course_id','=','courses.id')
         ->join('student_semesters','course_selections.student_semester_id','=','student_semesters.id')
         ->join('students','student_id','=','students.id')
-        ->select('attendance_students.id','students.nim','students.name','attendance_students.status','attendances.date','courses.code',
+        ->select('attendances.id AS att_id','attendance_students.id','students.nim','students.name','attendance_students.status','attendances.date','courses.code',
                  'courses.name AS crs_name','courses.credit','attendances.start_at','attendances.end_at','courses.id AS crs_id')
         ->where([
             ['attendances.id','=', $id]
