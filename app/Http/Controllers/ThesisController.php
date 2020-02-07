@@ -79,17 +79,18 @@ class ThesisController extends Controller
             // $theses =  Theses::find($id)
             // ->first();
             
-            $supervisor = DB::table('thesis_supervisors')
+            $supervisors = DB::table('thesis_supervisors')
             ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
             ->select('thesis_supervisors.*', 'lecturers.name as lecturer_name')
-            ->where('thesis_supervisors.thesis_id', $id);
-            // ->get();
-            $x = $supervisor->where('thesis_supervisors.status', 0)->pluck('lecturer_name', 'id');
-            $y = $supervisor->where('thesis_supervisors.status', 1)->pluck('lecturer_name', 'id');
+            ->where('thesis_supervisors.thesis_id', $id)
+            ->where('thesis_supervisors.status', 1)
+            ->get();
+            // $x = $supervisor->where('thesis_supervisors.status', 0)->pluck('lecturer_name', 'id');
+            // $y = $supervisor->where('thesis_supervisors.status', 1)->pluck('lecturer_name', 'id');
 
             $lecturer = DB::table('lecturers')->pluck('name', 'id');
 
-            return view('backend.theses.show', compact('theses', 'supervisor', 't_statuses', 'lecturer'));
+            return view('backend.theses.show', compact('theses', 'supervisors', 't_statuses', 'lecturer'));
     }
 
 }

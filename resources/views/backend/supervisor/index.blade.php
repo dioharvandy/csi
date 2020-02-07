@@ -56,7 +56,7 @@
                                 <td class="text-center">{{$supervisor->title}}</td>
                                 <td class="text-center">{{$supervisor->thesis_status}}</td>                              
                                 <td class="text-center">
-                                    <a href="{{route('student.theses.show', [$supervisor->thesis_id] )}}" class="btn btn-primary">Detail</a>
+                                    <a href="{{route('students.theses.show', [$supervisor->thesis_id] )}}" class="btn btn-primary">Detail</a>
                                 </td>
                                 <td class="text-center">
 
@@ -130,7 +130,7 @@
                                 <td class="text-center">{{$accept->title}}</td>
                                 <td class="text-center">{{$accept->thesis_status}}</td>                              
                                 <td class="text-center">
-                                    <a href="{{route('student.theses.show', [$accept->thesis_id] )}}" class="btn btn-primary">Detail</a>
+                                    <a href="{{route('students.theses.show', [$accept->thesis_id] )}}" class="btn btn-primary">Detail</a>
                                 </td> 
                             </tr>
                             <?php $n++ ?>

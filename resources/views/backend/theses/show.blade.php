@@ -42,7 +42,14 @@
                     <i class="fa fa-chalkboard-teacher"></i> <strong>Theses Supervisor</strong>
                 </div>
                 <div class="card-body">
-                    coming soon
+                    @foreach ($supervisors as $supervisor)
+                        @if ($supervisor->position == 1)                       
+                            {{$supervisor->lecturer_name}} <span class="badge badge-success">Dosen Pembimbing</span>
+                        @else            
+                            {{$supervisor->lecturer_name}} <span class="badge badge-primary">Asisten Pembimbing</span
+                        @endif
+                        <br>
+                    @endforeach
                 </div>
             </div>
 
@@ -53,7 +60,7 @@
                         <i class="fa fa-book"></i> <strong>Logbook</strong>
                     </div>
                     <div class="card-body">
-                            <a class="btn btn-primary" href="{{route('student.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a>
+                            <a class="btn btn-primary" href="{{route('students.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a>
                     </div>
                 </div>
 
@@ -64,7 +71,7 @@
                         <i class="fa fa-file"></i> <strong>Seminar Proposal</strong>
                     </div>
                     <div class="card-body">
-                            {{-- <a class="btn btn-primary" href="{{route('student.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a> --}}
+                        <a href="{{route('students.prosem.student')}}" class="btn btn-primary">Seminar Proposal</a>
                     </div>
                 </div>
         </div>

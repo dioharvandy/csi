@@ -18,8 +18,12 @@
 
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-                    <strong><i class="fa fa-list "></i> List Tugas Akhir</strong>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong><i class="fa fa-list "></i> List Tugas Akhir</strong>
+                        </div>
                         @include('backend.theses._modal')
+                        {{-- </div> --}}
                 </div>
 
                 {{-- CARD BODY--}}
@@ -28,7 +32,6 @@
                     <div class="row justify-content-end">
                         <div class="col-md-6 justify-content-end">
                             <div class="row justify-content-end">
-                                {{-- {{ $students->links() }} --}}
                             </div>
                         </div>
                     </div>
@@ -37,13 +40,8 @@
                         <thead>
                         <tr>
                             <th class="text-center">No.</th>
-                            {{-- <th class="text-center">Topik</th> --}}
                             <th class="text-center">Judul</th>
-                            {{-- <th class="text-center">Deskripsi</th> --}}
-                            <th class="text-center">Pembimbing</th>
-                            {{-- <th class="text-center">Tanggal Mulai</th> --}}
                             <th class="text-center">Status</th>
-                            <th class="text-center">Administrasi</th>
                             <th class="text-center">Detail</th>
                         </tr>
                         </thead>
@@ -53,17 +51,7 @@
                         @foreach($theses as $thesis)
                                 <tr>
                                     <td class="text-center">{{ $n }}</td>
-                                    {{-- <td>{{ $thesis->topics_name }}</td> --}}
                                     <td class="text-center">{{ $thesis->title }}</td>
-                                    {{-- <td class="text-center">{{ $thesis->abstract }}</td> --}}
-                                    <td class="text-center">
-                                        @foreach ($supervisors as $supervisor)
-                                            @if ($supervisor->thesis_id == $thesis->id)
-                                                {{$supervisor->lecturer_name}} <br>
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                    {{-- <td class="text-center">{{ $thesis->start_at }}</td> --}}
                                     <td class="text-center">               
                                        @foreach ($t_statuses as $key => $val)                                           
                                             @if ($key == $thesis->status)
@@ -72,14 +60,7 @@
                                        @endforeach
                                     </td>
                                     <td class="text-center">
-                                        <div class="btn-group-vertical" role="group">
-                                            <a class="btn btn-primary" href="{{route('student.ta_logbook.index', [$thesis->id])}}">Lihat Logbook</a>
-                                            <a href="" class="btn btn-primary">Seminar Proposal</a>
-                                        </div>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <a href="{{route('student.theses.show', [$thesis->id])}}" class="btn btn-primary">Detail</a>
+                                        <a href="{{route('students.theses.show', [$thesis->id])}}" class="btn btn-primary">Detail</a>
                                     </td>
                                 </tr>
                             <?php $n ++?>

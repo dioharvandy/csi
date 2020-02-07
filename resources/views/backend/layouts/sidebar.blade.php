@@ -8,40 +8,46 @@
                 </a>
             </li>
 
+            @if ( auth()->user()->type == 2)     
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-people"></i> Pengelolaan Sivitas</a>
-                <ul class="nav-dropdown-items">
-
-                    {{-- Menu Dosen--}}
-                    <li class="nav-item">
-                        @if( auth()->user()->type ==  3 )
-                            <a class="nav-link" href="{{ route('admin.supervisor.index') }}">
-                                <i class="nav-icon"></i> Dosen
-                            </a>
-                        @endif
-                    </li>
-
+                    <i class="nav-icon icon-people"></i> Mahasiswa
+                </a>
+                    
                     {{-- Menu Mahasiswa --}}
+                <ul class="nav-dropdown-items">
                     <li class="nav-item">
-                        @if ( auth()->user()->type == 2)     
                             <a class="nav-link" href="{{ route('students.index') }}">
-                                <i class="nav-icon"></i> Mahasiswa
+                                <i class="nav-icon"></i> Tugas Akhir
                             </a>
-                        @endif
                     </li>
 
-                    {{-- Menu Tendik --}}
                     <li class="nav-item">
-                        {{-- <a class="nav-link" href="{{ route('admin.staffs.index') }}"> --}}
-                            <i class="nav-icon"></i> Tendik
-                        </a>
+                            <a class="nav-link" href="{{ route('students.index') }}">
+                                <i class="nav-icon"></i> Seminar Proposal
+                            </a>
                     </li>
-
                 </ul>
             </li>
+            @endif
 
+            @if( auth()->user()->type ==  3 )
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-people"></i> Dosen
+                </a>
 
+                {{-- Menu Dosen --}}
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.supervisor.index') }}">
+                                <i class="nav-icon"></i> Tugas Akhir Mahasiswa
+                            </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
+                    
         </ul>
     </nav>
 

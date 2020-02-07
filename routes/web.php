@@ -28,10 +28,15 @@ Route::post('/postlogin', 'AuthController@postlogin')->name('postlogin');
 
     //Tugas Akhir
     Route::get('/mahasiswa', 'ThesisController@index')->name('students.index');
-    Route::get('/mahasiswa/logbook/{id}', 'ThesisLogbookController@index')->name('student.ta_logbook.index');
-    Route::post('/mahasiswa/store/', 'ThesisController@store')->name('student.theses.store');
-    Route::get('/mahasiswa/detail/{id}', 'ThesisController@show')->name('student.theses.show');
+    Route::post('/mahasiswa/store/', 'ThesisController@store')->name('students.theses.store');
+    Route::get('/mahasiswa/detail/{id}', 'ThesisController@show')->name('students.theses.show');
     Route::post('/mahasiswa/supervisor/', 'ThesisSupervisorController@create')->name('student.supervisor.create');
+    
+    //Logbook
+    Route::get('/mahasiswa/logbook/{id}', 'ThesisLogbookController@index')->name('students.ta_logbook.index');
+
+    //Seminar Proposal
+    Route::get('/mahasiswa/seminar_proposal/', 'SeminarProposalController@student')->name('students.prosem.student');
  });
 
 

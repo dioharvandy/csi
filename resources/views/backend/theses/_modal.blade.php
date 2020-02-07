@@ -1,11 +1,12 @@
 <!-- Button trigger modal -->
-<div class="text-right">
-    <button type="button" class="btn btn-primary btn-group" data-toggle="modal" data-target="#model_pembimbing">
-      Ajukan pembimbing
-    </button>
+    <div class="text-right col-6">
+        <button type="button" class="btn btn-primary btn-group" data-toggle="modal" data-target="#model_pembimbing">
+        Ajukan pembimbing
+        </button>
+    </div>
 </div>
 
-{!! Form::open(['method' => 'POST', 'route' => ['student.theses.store'], 'class' => 'post']) !!}
+{!! Form::open(['method' => 'POST', 'route' => ['students.theses.store'], 'class' => 'post']) !!}
 <!-- Modal -->
 <div class="modal fade" id="model_pembimbing" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

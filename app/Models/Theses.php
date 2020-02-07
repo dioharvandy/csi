@@ -53,4 +53,9 @@ class Theses extends Model
         return $this->hasMany(ThesisLogbook::class, 'thesis_id');
     }
 
+    public function thesisProposal()
+    {
+        return $this->hasMany(ThesisProposal::class, 'thesis_id');
+    }
+
 }
