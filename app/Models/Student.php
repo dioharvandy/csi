@@ -14,6 +14,7 @@ class Student extends Model
         'photo' => 'file|image'
     ];
 
+    protected $table = 'students';
     protected $guarded = [];
     protected $dates = ['birthdate'];
     public $incrementing = false;

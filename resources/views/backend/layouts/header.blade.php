@@ -46,6 +46,9 @@
                 <div class="dropdown-header text-center">
                     <strong>Personal</strong>
                 </div>
+                <a class="dropdown-item" href="{{ route('profile.show') }}">
+                    <i class="fa fa-pencil"></i> Edit Profil
+                </a>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     <i class="fa fa-lock"></i> Logout
