@@ -23,8 +23,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        $user = auth()->user()->student()->photo;
+    {   
+        // $user = \Auth::user()->student->photo;
+        // dd($user);
         // if($user->hasRole('admin')){
         //     return view('backend.home');
         // }

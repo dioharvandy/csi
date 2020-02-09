@@ -39,4 +39,9 @@ class Student extends Model
         }
         return 'img/default-user.png';
     }
+
+    public function thesis()
+    {
+        return $this->hasOne(Thesis::class, 'student_id');
+    }
 }

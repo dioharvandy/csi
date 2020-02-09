@@ -20,6 +20,10 @@ Route::get('/profile/show', 'HomeController@showProfile')->name('profile.show');
 Route::get('/profile/edit', 'HomeController@editProfile')->name('profile.edit');
 Route::patch('/profile/edit', 'HomeController@updateProfile')->name('profile.update');
 
+Route::get('logbook', 'ThesisLogbookController@logbookIndex')->name('logbook.index');
+Route::post('logbook', 'ThesisLogbookController@logbookCreate')->name('logbook.create');
+Route::patch('logbook', 'ThesisLogbookController@logbookUpdate')->name('logbook.update');
+
 Route::get('/admin/ta', 'ThesisLogbookController@index')->name('admin.ta.index');
 Route::post('/admin/ta', 'ThesisLogbookController@store')->name('admin.ta.store'); //routing simpan data dosen baru
 Route::get('/user/ta/create', 'ThesisLogbookController@create')->name('user.ta.create');

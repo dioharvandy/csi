@@ -49,7 +49,7 @@
                         <tr>
                             <th>Jurusan</th>
                             <td>:</td>
-                            <td>{{ Auth::user()->student->department->name }}</td>
+                            <td>{{ Auth::user()->student->department ? Auth::user()->student->department->name : '-' }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Kelamin</th>

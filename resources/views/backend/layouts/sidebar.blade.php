@@ -37,6 +37,11 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logbook.index') }}">
+                    <i class="nav-icon icon-speedometer"></i>Log Tugas Akhir
+                </a>
+            </li>
 
         </ul>
     </nav>
