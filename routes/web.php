@@ -19,9 +19,9 @@ Auth::routes();
     Route::get('/attendance', 'AttendanceController@index');
     Route::get('/attendance/{id}/{jenis}', 'AttendanceController@show')->name('kehadiran');
     Route::patch('/attendance/student', 'AttendanceController@store');
-    Route::get('/attendance/student/{id}', 'AttendanceController@showStudent');
-    Route::get('/attendance/edit/{id}', 'AttendanceController@edit');
-    Route::patch('/attendance/edit/{id}', 'AttendanceController@update');
+    Route::get('/attendance/student/{id}/detail', 'AttendanceController@showStudent');
+    Route::get('/attendance/edit/{id}/detail', 'AttendanceController@edit')->name('detailabsen');
+    Route::patch('/attendance/edit/{id}', 'AttendanceController@update')->name('editabsen');
 
     Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
 

@@ -74,16 +74,18 @@ class AttendanceController extends Controller
     {
         //
     }
-
+    
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
-            $date = $request->date;
+        // $id = Request::segment(2);
+        // dd($id);
+        $date = $request->date;
             $newdate = date("Y-m-d", strtotime($date));
 
             $students = DB::table('classrooms')
@@ -94,16 +96,16 @@ class AttendanceController extends Controller
             ->get();
 
             DB::table('attendances')->insertGetId(
-            array('class_lecturer_id' => $request->class_lecturer_id,
-                  'meeting_no'=> $request->meeting_no,
-                  'date' => $newdate,
-                  'start_at'=> $request->start_at,
-                  'end_at'=> $request->end_at,
-                  'room_id'=> $request->room_id,
-                  'photo'=> $request->photo,
-                  'status'=> 1
-            )
-        );
+                array('class_lecturer_id' => $request->class_lecturer_id,
+                    'meeting_no'=> $request->meeting_no,
+                    'date' => $newdate,
+                    'start_at'=> $request->start_at,
+                    'end_at'=> $request->end_at,
+                    'room_id'=> $request->room_id,
+                    'photo'=> $request->photo,
+                    'status'=> 1
+                )
+            );
 
         $attendance = DB::table('attendances')
         ->orderby('id','desc')
@@ -128,14 +130,15 @@ class AttendanceController extends Controller
         ->join('courses','classrooms.course_id','=','courses.id')
         ->join('student_semesters','course_selections.student_semester_id','=','student_semesters.id')
         ->join('students','student_id','=','students.id')
-        ->select('students.nim','students.name','attendance_students.status','attendances.date')
+        ->select('students.nim','students.name','attendance_students.status','attendances.date','attendances.id')
         ->where([
             ['attendances.id','=', $attendance[0]->id]
         ])
         ->get();
+        // dd($attendance_students[0]);
         
-        
-        return redirect('attendance/student/'.$attendance_students[0]->id);
+        // return redirect(route('presensi', ['id' => $id]));
+        return redirect('attendance/student/'.$attendance_students[0]->id."/detail");
     }
 
     /**
@@ -155,6 +158,7 @@ class AttendanceController extends Controller
         ->select('attendances.*','courses.id AS crs_id','courses.name AS crs_name','courses.code',
                  'courses.semester','lecturers.name AS lecname','class_lecturers.id AS clectr_id')
         ->get();
+        // dd($attendance);
         
         $students = DB::table('classrooms')
         ->join('course_selections','course_selections.classroom_id','=','classrooms.id')
@@ -180,7 +184,7 @@ class AttendanceController extends Controller
         ->join('student_semesters','course_selections.student_semester_id','=','student_semesters.id')
         ->join('students','student_id','=','students.id')
         ->where('courses.id','=',$id)
-        ->select('students.nim','students.name','attendance_students.status','attendances.date')
+        ->select('students.nim','students.name','attendance_students.status','attendances.date','attendances.id')
         ->get();
  
         // dd(is_array());
@@ -189,21 +193,31 @@ class AttendanceController extends Controller
         $ayam = [];
         $kerbau = [];
         $kolom = [];
+        $bebek = [];
+        // dd($attendance_students);
+        foreach($attendance as $a){
+            $kolom[] = ['id' => $a->id, 'tgl' => $a->date];
+        }
         foreach ($attendance_students as  $a) {
+            // dd($a);
             $ikan = null;
-            if (!in_array($a->date,$kolom)) {
-                array_push($kolom, $a->date);
-            }
+            // if (in_array($a->id,$bebek)) {
+            //     array_push($kolom, $a->date);
+            // }
+            // if (!in_array($a->date,$kolom)) {
+            //     array_push($kolom, $a->date);
+            // }
             if (!in_array($a->nim,$kerbau)) {
                 array_push($kerbau, $a->nim);
+                // dd($attendance_students);
                 foreach ($attendance_students as $b) {
                     if ($a->nim == $b->nim) {   
                         if ($ikan == null) {
                             $ikan['nim'] = $b->nim;
                             $ikan['name'] = $b->name;
-                            $ikan['desc'] = [['date' => $b->date, 'status' => $b->status]];   
+                            $ikan['desc'] = [['date' => $b->date, 'status' => $b->status, 'id' => $b->id]];   
                         }else {
-                            array_push($ikan['desc'], ['date' => $b->date, 'status' => $b->status]);
+                            array_push($ikan['desc'], ['date' => $b->date, 'status' => $b->status, 'id' => $b->id]);
                         }
                     }
                 }   
@@ -219,6 +233,7 @@ class AttendanceController extends Controller
         if($jenis == 'print'){
             return view('backend.attendance.tabel', compact('ayam', 'kolom'));
         } else{
+            // dd($ayam);
             return view('backend.attendance.show', compact('attendance','students','attendance_students', 'limits', 'student_pluck', 'date_pluck','ayam','kolom'));
         }
     }
@@ -261,7 +276,8 @@ class AttendanceController extends Controller
             ->where('id', '=', $request->id)
             ->update(['status' => $request->status]);
 
-            return redirect('/attendance/edit/'.$id)->with('flash_message', 'Data updated!');
+            return redirect(route('detailabsen', ['id' => $id]))->with('flash_message', 'Data updated!');
+            // return redirect('/attendance/edit/'.$id)->with('flash_message', 'Data updated!');
     }
 
     /**
@@ -276,7 +292,7 @@ class AttendanceController extends Controller
     }
 
     public function showStudent($id){
-
+        // dd('aa');
         $attendance_students = DB::table('attendance_students')
         ->join('attendances','attendance_id','=','attendances.id')
         ->join('course_selections','attendance_students.course_selection_id','=','course_selections.id')
@@ -287,9 +303,10 @@ class AttendanceController extends Controller
         ->select('students.nim','students.name','attendance_students.status','attendances.date','courses.code',
                  'courses.name AS crs_name','courses.credit','attendances.start_at','attendances.end_at')
         ->where([
-            ['attendances.date','=', $id]
+            ['attendances.id','=', $id]
         ])
         ->get();
+        // dd($attendance_students);
 
         return view('backend.attendance.student', compact('attendance_students'));
     }

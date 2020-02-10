@@ -120,16 +120,12 @@
                                                               <tr>
                                                                 <th scope="row">{{$a}}</th>
                                                                 <td>{{$att->date}}</td>
-                                                                <td>{!! cui_btn_edit(url('/attendance/edit/'. $att->id)) !!}</td>
+                                                                <td>{!! cui_btn_edit(url('/attendance/edit/'. $att->id."/detail")) !!}</td>
                                                               </tr>
                                                               @php $a++; @endphp
                                                               @endforeach
                                                             </tbody>
                                                           </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                 </div>
                                                 </div>
@@ -141,7 +137,6 @@
                             {{-- ayam --}}
                             <div class="row">
                                 <a class="buttonancak btn-primary" href="{{ route('kehadiran', ['id' => Request::segment(2), 'jenis' => 'print']) }}"><i class="fa fa-print"></i></a>
-
                                 @include('backend.attendance.tabel');
                             </div>
                         </div>
