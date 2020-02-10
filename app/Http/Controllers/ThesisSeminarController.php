@@ -47,7 +47,6 @@ class ThesisSeminarController extends Controller
                 ->select('students.name AS student_name', 'theses.title')
                 ->where('students.nim', '=', $nim)
                 ->get();
-        $info = $info[0];
         
         $sv = DB::table('theses')
             ->join('students', 'theses.student_id', '=', 'students.id')    
@@ -56,6 +55,15 @@ class ThesisSeminarController extends Controller
             ->select('lecturers.name AS lecturer_name')
             ->where('students.nim', '=', $nim)
             ->get();
+
+        if(empty($student[0]->id))
+        {
+            return redirect()->route('admin.semhas.index')->with('message', 'Gagal membuat pengajuan. Anda belum mendaftar tugas akhir.');           
+        }
+        elseif(empty($statuss[0]->status))
+        {
+            return redirect()->route('admin.semhas.index')->with('message', 'Gagal membuat pengajuan. Anda belum mendaftar seminar proposal.');           
+        }
         
         foreach($statuss as $status)
         {
@@ -63,6 +71,7 @@ class ThesisSeminarController extends Controller
             {
                 if($st == 30 && $count >= 7)
                 {
+                    $info = $info[0];
                     return view('backend.thesis_seminar.create', compact('student', 'info', 'sv'));
                 }
                 elseif($st != 30 && $count < 7)
@@ -172,6 +181,22 @@ class ThesisSeminarController extends Controller
                   ->where('thesis_seminars.id','=', $id)
                   ->get();
         
+        $nim = Auth::user()->username;
+        $info = DB::table('theses')
+                ->join('students', 'theses.student_id', '=', 'students.id')
+                ->select('students.name AS student_name', 'theses.title')
+                ->where('students.nim', '=', $nim)
+                ->get();
+        $info = $info[0];
+          
+        $sv = DB::table('theses')
+              ->join('students', 'theses.student_id', '=', 'students.id')    
+              ->join('thesis_supervisors', 'theses.id', '=', 'thesis_supervisors.thesis_id')
+              ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
+              ->select('lecturers.name AS lecturer_name')
+              ->where('students.nim', '=', $nim)
+              ->get();
+
         foreach($statuss as $status)
         {
             foreach($status as $st)
@@ -185,7 +210,7 @@ class ThesisSeminarController extends Controller
                             ->select('theses.id')->where('thesis_seminars.id', '=', $id)
                             ->get();
                 
-                    return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id'));
+                    return view ('backend.thesis_seminar.edit', compact('semhas', 'student', 'id', 'info', 'sv'));
                 }
                 elseif($st != 10)
                 {

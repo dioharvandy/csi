@@ -41,6 +41,9 @@
                 <div class="form-group row">
                         <label  class="col-sm-2 col-form-label" for="supervisor_name"><strong>Pembimbing</strong></label>
                     @foreach($sv as $s)
+                        @if($loop->last && $loop->iteration == 2)
+                        <div class="col-sm-2"></div>
+                        @endif
                     <div class="col-sm-10">
                         {{ Form::text('lecturer_name', $s->lecturer_name, ['class' => 'form-control-plaintext', 'id' => 'lecturer_name', 'readonly' => 'readonly']) }}
                     </div>

@@ -54,11 +54,14 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label" for="reviewer_name"><strong>Penguji</strong></label>
-                    @foreach($reviewer as $r)
+                        @foreach($reviewer as $r)
+                        @if($loop->last && $loop->iteration == 2)
+                        <div class="col-sm-2"></div>
+                        @endif
                         <div class="col-sm-10">
                         {{ Form::text('reviewer_name', $r->reviewer_name, ['class' => 'form-control-plaintext', 'id' => 'reviewer_name', 'readonly' => 'readonly']) }}
                         </div>
-                    @endforeach
+                        @endforeach
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label" for="status"><strong>Status</strong></label>
