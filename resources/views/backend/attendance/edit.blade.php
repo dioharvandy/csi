@@ -10,7 +10,7 @@
 
 
 @section('toolbar')
-    <strong><i class="fa fa-list"></i> List Absensi tanggal {{$attendance_students[0]->date}}</strong>
+    <strong></strong>
     {{-- {!! cui_toolbar_btn(route('students.create'), 'icon-plus', 'Tambah Mahasiswa') !!} --}}
 @endsection
 
@@ -22,7 +22,7 @@
 
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-
+                    <i class="fa fa-list"></i> List Absensi tanggal {{$attendance_students[0]->date}}
                 </div>
 
                 {{-- CARD BODY--}}
@@ -86,13 +86,14 @@
                                 'class' => 'form-horizontal', 'files' => true]) !!}
                                 <td class="">
                                     <input type="hidden" name="id" value="{{$att_student->id}}">
-                                    <select name="status" class="custom-select">
+                                    {{-- <select name="status" class="custom-select">
                                     <option value="{{$att_student->status}}">{{config('central.attendance_student') [$att_student->status]}}</option>
                                     <option value="1">V</option>
                                     <option value="2">X</option>
                                     <option value="3">I</option>
                                     <option value="4">S</option>
-                                    </select>
+                                    </select> --}}
+                                    {!! Form::select('status', array(1 => 'Hadir', 2=> 'Absen', 3 => 'Izin', 4 => 'Sakit'), $att_student->status, ['class' => 'form-control'] ) !!}
                                 </td>
                                 <td><button class="btn btn-primary" type="submit">Edit</button></td>
                                 {!! Form::close() !!}

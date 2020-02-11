@@ -10,8 +10,17 @@
 
 
 @section('toolbar')
-<strong><i class="fa fa-list"></i> List Kehadiran</strong>
-    {{-- {!! cui_toolbar_btn(route('students.create'), 'icon-plus', 'Tambah Mahasiswa') !!} --}}
+        {{-- {!! cui_toolbar_btn("",'icon-plus', 'Tambah Pertemuan') !!} --}}
+        {{-- {!! cui_toolbar_btn('fa fa-edit', 'Edit Pertemuan') !!}  --}}
+        <a href="" class="btn" data-toggle="modal" data-target="#exampleModalCenter">
+            <i class="icon-plus"></i> &nbsp;Tambah Pertemuan
+        </a>              
+        
+        <a href="" class="btn" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-edit"></i> &nbsp;Edit Pertemuan
+        </a>
+
+    
 @endsection
 
 
@@ -22,7 +31,7 @@
 
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-                    
+                    <i class="fa fa-list"></i> List Kehadiran
                 </div>
 
                 {{-- CARD BODY--}}
@@ -33,21 +42,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="birthplace">Mata Kuliah:</label>
+                                        <label class="form-label" for="matkul">Mata Kuliah:</label>
                                         {{ html()->text('mataKuliah', $attendance[0]->crs_name)->class('form-control-plaintext') }}
                                     </div>
                                 </div>
                             
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="birthday">Kode MatKul:</label>
+                                        <label class="form-label" for="kodematkul">Kode MatKul:</label>
                                         {{ html()->text('kodeMatKul', $attendance[0]->code)->class('form-control-plaintext') }}
                                     </div>
                                 </div>
         
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label" for="birthday">Dosen Pengampu:</label>
+                                        <label class="form-label" for="dosen">Dosen Pengampu:</label>
                                         {{ html()->text('dosenPengampu', $attendance[0]->lecname)->class('form-control-plaintext') }}
                                     </div>
                                 </div>
@@ -61,9 +70,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
+                                       
                                         
                                         <!-- Modal -->
                                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -91,9 +98,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="fa fa-edit"></i>
-                                            </button>
+                                            </button> --}}
                                             
                                             <!-- Modal -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -137,7 +144,7 @@
                             {{-- ayam --}}
                             <div class="row">
                                 <a class="buttonancak btn-primary" href="{{ route('kehadiran', ['id' => Request::segment(2), 'jenis' => 'print']) }}"><i class="fa fa-print"></i></a>
-                                @include('backend.attendance.tabel');
+                                @include('backend.attendance.tabel')
                             </div>
                         </div>
                     <div class="row justify-content-end">

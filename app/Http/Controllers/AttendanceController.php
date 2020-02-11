@@ -231,7 +231,7 @@ class AttendanceController extends Controller
         // dd($date_pluck);
         // dd($student_pluck);
         if($jenis == 'print'){
-            return view('backend.attendance.tabel', compact('ayam', 'kolom'));
+            return view('backend.attendance.tabel', compact('ayam', 'kolom', 'attendance'));
         } else{
             // dd($ayam);
             return view('backend.attendance.show', compact('attendance','students','attendance_students', 'limits', 'student_pluck', 'date_pluck','ayam','kolom'));
@@ -276,7 +276,7 @@ class AttendanceController extends Controller
             ->where('id', '=', $request->id)
             ->update(['status' => $request->status]);
 
-            return redirect(route('detailabsen', ['id' => $id]))->with('flash_message', 'Data updated!');
+            return redirect(route('detailabsen', ['id' => $id]))->with('flash_message', 'Data updated!')    ;
             // return redirect('/attendance/edit/'.$id)->with('flash_message', 'Data updated!');
     }
 
