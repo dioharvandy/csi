@@ -6,6 +6,7 @@ use App\Attendance;
 use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
+use Auth;
 
 class AttendanceController extends Controller
 {
@@ -49,6 +50,7 @@ class AttendanceController extends Controller
             }
         }
 
+        $idDosen = Auth::user()->id;
 
      $attendance = DB::table('semesters')
         ->join('classrooms','classrooms.semester_id','=','semesters.id')
@@ -57,9 +59,11 @@ class AttendanceController extends Controller
         ->join('courses','classrooms.course_id','=','courses.id')
         ->select('courses.id','courses.name AS crs_name','courses.code','courses.semester','lecturers.name AS lecname')
         ->where([
-            ['semesters.id','=', $sems]
+            ['semesters.id','=', $sems],
+            ['lecturers.id', '=', $idDosen]
         ])
         ->paginate($perPage);
+        
 
         return view('backend.attendance.index', compact('attendance','semester'));
 

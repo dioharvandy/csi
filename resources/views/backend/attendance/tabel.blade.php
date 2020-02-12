@@ -25,32 +25,32 @@
 @endif
 <div class="table-responsive">
     <table class="table table-striped">
-        <thead>
+        <thead class="table-with-outline">
         <tr>
-            <th class="text-center">Nama Mahasiswa</th>
-            <th class="text-center">NIM</th>
+            <th class="text-center table-with-outline">Nama Mahasiswa</th>
+            <th class="text-center table-with-outline">NIM</th>
             @foreach($kolom as $att)
             <?php
                 $tgl = explode("-", $att['tgl']);
                 // dd($tgl);
                 $tgl = $tgl[2]."/".$tgl[1];
             ?>
-            <th class="text-center">{{$tgl}}</th>
+            <th class="text-center table-with-outline">{{$tgl}}</th>
             @endforeach 
         </tr>
         </thead>
         <tbody>
             @foreach ($ayam as $a)
-                <tr>
-                    <td class="tt">{{$a['name']}}</td>
-                    <td class="text-center">{{$a['nim']}}</td>
+                <tr class="table-with-outline">
+                    <td class="tt table-with-outline">{{$a['name']}}</td>
+                    <td class="text-center table-with-outline">{{$a['nim']}}</td>
                     <?php
                         // dd($a);
                     ?>
                     @foreach ($a['desc'] as $key => $item)
                         @foreach ($a['desc'] as $i)
                             @if ($kolom[$key]['id'] == $i['id'])
-                                <td class="text-center">{{config('central.attendance_student')[$item['status']]}}</td>
+                                <td class="text-center table-with-outline">{{config('central.attendance_student')[$item['status']]}}</td>
                             @endif
                         @endforeach
                     @endforeach
@@ -75,6 +75,10 @@
     }
     .miss{
         border:0px;
+    }
+    .table-with-outline{
+        border: 1px solid;
+    
     }
 </style>
 <script>
