@@ -30,6 +30,10 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/thesis_seminar') }}">
+                    <i class="nav-icon fas fa-laptop"></i> Pengelolaan Semhas</a>
+            </li>
 
         </ul>
     </nav>
