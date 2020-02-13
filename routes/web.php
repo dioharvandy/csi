@@ -21,4 +21,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('home', 'HomeController@index')->name('home');
 
     require(__DIR__ . '/backend/master.php');
+
+    require(__DIR__ . '/backend/thesis.php');
 });
