@@ -44,6 +44,21 @@
                 </ul>
             </li>
 
+            <li class="nav-item nav-dropdown">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i class="nav-icon icon-people"></i> Pengelolaan Kehadiran</a>
+                <ul class="nav-dropdown-items">
+
+                    {{-- Menu Kehadiran--}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.attendance.index') }}">
+                            <i class="nav-icon"></i>Kelas
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/thesis_seminar') }}">
                     <i class="nav-icon fas fa-laptop"></i> Pengelolaan Semhas</a>

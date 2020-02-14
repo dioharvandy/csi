@@ -79,6 +79,13 @@ return [
         11 => 'S3'
     ],
 
+    'attendance_student' => [
+        0 => 'Absen',
+        1 => 'Hadir',
+        2 => 'Absen',
+        3 => 'Izin',
+        4 => 'Sakit'
+
     'thesis_supervisor_position' => [
         1 => 'Pembimbing Tunggal',
         2 => 'Pembimbing Utama',
