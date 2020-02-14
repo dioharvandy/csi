@@ -27,9 +27,9 @@ class Theses extends Model
     ] ;
 
     public static $theses_statuses =  [
-        self::PENGAJUAN => 'Thesis Submission',
-        self::SEMPRO => 'Proposal Seminar',
-        self::BIMBINGAN => 'Counseling Phase',
+        self::PENGAJUAN => 'Pengajuan',
+        self::SEMPRO => 'Seminar Proposal',
+        self::BIMBINGAN => 'Masa Bimbingan',
         self::P_SEMHAS => 'Pengajuan Seminar Hasil',
         self::S_SEMHAS => 'Selesai Seminar Hasil',
         self::P_SIDANG => 'Pengajuan Sidang',
@@ -55,7 +55,7 @@ class Theses extends Model
 
     public function thesisProposal()
     {
-        return $this->hasMany(ThesisProposal::class, 'thesis_id');
+        // return $this->hasMany('App\Models\ThesisProposal');
+        return $this->hasMany(ThesisProposal::class);
     }
-
 }

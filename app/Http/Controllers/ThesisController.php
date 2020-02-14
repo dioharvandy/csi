@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\Theses;
+use App\Models\Lecturer;
 use App\Models\ThesisSupervisor;
 use DB;
 
@@ -23,23 +24,23 @@ class ThesisController extends Controller
             
             $theses =  Theses::select('theses.*', 'thesis_topics.name as topics_name')
             ->join('thesis_topics', 'theses.thesis_id', '=', 'thesis_topics.id')
-            ->where('theses.student_id', $user)
-            ->paginate(10);
-
+            ->where([
+                ['theses.student_id', $user],
+                // ['theses.status', '>=', 4],
+                ['theses.status', '<', 35]
+                ])->paginate(10);
+            // ->where(['theses.status', '>=', 4])
+            // ->where('theses.status', '<', 35)
             
             $supervisors = ThesisSupervisor::select('thesis_supervisors.*', 'lecturers.name as lecturer_name')
             ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
             ->where('thesis_supervisors.status', 1)
             ->get();
 
-            // dd($supervisors->id);
-    
-            
             $lecturer = DB::table('lecturers')->pluck('name', 'id');
-            // dd($theses);
             return view('backend.theses.index', compact('theses', 'supervisors', 't_statuses', 'lecturer', 'topic', 'student'));
-
     }
+    
 
     public function store(Request $request){
 
@@ -49,7 +50,22 @@ class ThesisController extends Controller
         //Create Lecturer
         $data = $request->all();
         $lecturer_field = $data['lecturer_id'];
-        // dd($lecturer_field);
+        $supervisors = ThesisSupervisor::all();
+        $status = [];
+            foreach ($lecturer_field as $value) {
+                $status[$value] = 0;
+                foreach($supervisors as $supervisor){
+                    if($supervisor->lecturer_id == $value){
+                        $status[$value]++;
+                    }
+                }
+                if($status[$value] >= 20){
+                    $lecturer = Lecturer::findOrFail($value);
+                    toastr()->warning("Pembimbing ".$lecturer->name." sudah penuh");
+                    return redirect()->route('students.index');
+                }
+            }
+
             foreach ($lecturer_field as $key => $value) {
                 if (isset($value)) {
                     if($key == 0){
@@ -60,6 +76,7 @@ class ThesisController extends Controller
                     }
                 }
             }
+
         toastr()->success('Pembimbing sudah diajukan');
         return redirect()->route('students.index');
     }
@@ -72,12 +89,6 @@ class ThesisController extends Controller
             ->join('thesis_topics', 'theses.thesis_id', '=', 'thesis_topics.id')
             ->where('theses.id',$id)
             ->get();
-
-            // dd($t_statuses);
-            // dd($theses[0]->id);
-
-            // $theses =  Theses::find($id)
-            // ->first();
             
             $supervisors = DB::table('thesis_supervisors')
             ->join('lecturers', 'thesis_supervisors.lecturer_id', '=', 'lecturers.id')
@@ -85,12 +96,15 @@ class ThesisController extends Controller
             ->where('thesis_supervisors.thesis_id', $id)
             ->where('thesis_supervisors.status', 1)
             ->get();
-            // $x = $supervisor->where('thesis_supervisors.status', 0)->pluck('lecturer_name', 'id');
-            // $y = $supervisor->where('thesis_supervisors.status', 1)->pluck('lecturer_name', 'id');
 
             $lecturer = DB::table('lecturers')->pluck('name', 'id');
 
-            return view('backend.theses.show', compact('theses', 'supervisors', 't_statuses', 'lecturer'));
+            if(auth()->user()->type == 2){
+                return view('backend.theses.show', compact('theses', 'supervisors', 't_statuses', 'lecturer'));
+            }
+            elseif(auth()->user()->type == 3){
+                return view('backend.supervisor.show_supervisor', compact('theses', 'supervisors', 't_statuses', 'lecturer'));
+            }
     }
 
 }

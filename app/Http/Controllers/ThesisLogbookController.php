@@ -21,5 +21,12 @@ class ThesisLogbookController extends Controller
         
         // dd($logbook);
         return view('backend.ta_logbooks.index', compact('logbook'));
+
+        if(auth()->user()->type == 2){
+            return view('backend.ta_logbooks.index', compact('logbook'));
+        }
+        elseif(auth()->user()->type == 3){
+            return view('backend.ta_logbooks.index', compact('logbook'));
+        }
     }
 }

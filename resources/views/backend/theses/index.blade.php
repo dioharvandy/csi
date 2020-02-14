@@ -45,8 +45,8 @@
                             <th class="text-center">Detail</th>
                         </tr>
                         </thead>
-                        <tbody>
 
+                        <tbody>
                         <?php $n = 1?>
                         @foreach($theses as $thesis)
                                 <tr>

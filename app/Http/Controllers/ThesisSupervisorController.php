@@ -15,6 +15,8 @@ class ThesisSupervisorController extends Controller
 {
     // INDEX
     function index(){
+        $t_statuses = Theses::$theses_statuses;
+
         $user_id = auth()->user();
         $user = Lecturer::find($user_id)->pluck('id');
 
@@ -32,12 +34,12 @@ class ThesisSupervisorController extends Controller
         ->where('lecturer_id',  $user)
         ->paginate(10);
 
-        // dd($accepts->count());
-        return view('backend.supervisor.index', compact('supervisors', 'accepts'));
+        return view('backend.supervisor.index', compact('supervisors', 'accepts', 't_statuses'));
     } // INDEXEND
 
     // ACCEPT-REJECT
     function accepted($id){
+        // dd('working accepted');
         $user_id = auth()->user();
         $user = Lecturer::find($user_id)->pluck('id');
 
@@ -57,6 +59,7 @@ class ThesisSupervisorController extends Controller
     }
 
     function rejected($id){
+        // dd('working rejected');
         $user_id = auth()->user();
         $user = Lecturer::find($user_id)->pluck('id');
 
@@ -73,12 +76,4 @@ class ThesisSupervisorController extends Controller
         return redirect()->route('admin.supervisor.index');
     }
 //ACCEPT-REJECT END
-
-    // function create(Request $request){
-    //     $data = $request->all();
-    //     $supervisor = ThesisSupervisor::create($data);
-    //     toastr()->success('Pembimbing sudah diajukan');
-    //     return redirect()->route('students.index');
-        
-    // }
 }

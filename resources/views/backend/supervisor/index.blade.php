@@ -35,8 +35,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="text-center">No.</th>
-                                <th class="text-center">Posisi yang diajukan</th>
+                                {{--  <th class="text-center">Posisi yang diajukan</th>  --}}
                                 <th class="text-center">Nama Mahasiswa</th>
                                 <th class="text-center">NIM Mahasiswa</th>
                                 <th class="text-center">Judul</th>
@@ -46,23 +45,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $n=1 ?>
                             @foreach ($supervisors as $supervisor)
                             <tr>
-                                <td class="text-center">{{$n}}</td>
-                                <td class="text-center">{{$supervisor->position}}</td>
+                                {{--  <td class="text-center">{{$supervisor->position}}</td>  --}}
                                 <td class="text-center">{{$supervisor->student_name}}</td>
                                 <td class="text-center">{{$supervisor->student_nim}}</td>
                                 <td class="text-center">{{$supervisor->title}}</td>
-                                <td class="text-center">{{$supervisor->thesis_status}}</td>                              
+                                <td class="text-center">
+                                    @foreach ($t_statuses as $key => $val)                                           
+                                        @if ($key == $supervisor->thesis_status)
+                                            {{ $val }}
+                                        @endif
+                                    @endforeach    
+                                </td>                              
                                 <td class="text-center">
                                     <a href="{{route('students.theses.show', [$supervisor->thesis_id] )}}" class="btn btn-primary">Detail</a>
                                 </td>
                                 <td class="text-center">
-
-                                        {{-- <a href=" {{route('admin.supervisor.accepted', [$supervisor->thesis_id] )}} " onclick="confirmed()" class="btn btn-sm btn-outline-info">
-                                            <i class="fa fa-thumbs-up"></i>
-                                        </a> --}}                                    
+                                    <div class="row">
                                         {!! Form::open(['model' => 'POST', 'route' => ['admin.supervisor.accepted', $supervisor->thesis_id] ]) !!}
                                             <button type="submit" onclick="confirmed()"  class="btn btn-sm btn-outline-info" >
                                                     <i class="fa fa-thumbs-up"></i>
@@ -74,13 +74,9 @@
                                                     <i class="fa fa-thumbs-down"></i>
                                             </button>
                                         {!! Form::close() !!}   
-
-                                        {{-- <a href=" {{route('admin.supervisor.rejected', [$supervisor->thesis_id] )}} " onclick="confirmed()" class="btn btn-sm btn-outline-danger">
-                                            <i class="fa fa-thumbs-down"></i>
-                                        </a> --}}
+                                    </div>
                                 </td>
                             </tr>
-                            <?php $n++ ?>
                             @endforeach
                         </tbody>
                     </table>
@@ -110,8 +106,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="text-center">No.</th>
-                                <th class="text-center">Posisi yang diajukan</th>
+                                {{--  <th class="text-center">Posisi yang diajukan</th>  --}}
                                 <th class="text-center">Nama Mahasiswa</th>
                                 <th class="text-center">NIM Mahasiswa</th>
                                 <th class="text-center">Judul</th>
@@ -120,20 +115,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $n=1 ?>
                             @foreach ($accepts as $accept)
                             <tr>
-                                <td class="text-center">{{$n}}</td>
-                                <td class="text-center">{{$accept->position}}</td>
+                                {{--  <td class="text-center">{{$accept->position}}</td>  --}}
                                 <td class="text-center">{{$accept->student_name}}</td>
                                 <td class="text-center">{{$accept->student_nim}}</td>
                                 <td class="text-center">{{$accept->title}}</td>
-                                <td class="text-center">{{$accept->thesis_status}}</td>                              
                                 <td class="text-center">
-                                    <a href="{{route('students.theses.show', [$accept->thesis_id] )}}" class="btn btn-primary">Detail</a>
+                                    @foreach ($t_statuses as $key => $val)                                           
+                                        @if ($key == $accept->thesis_status)
+                                            {{ $val }}
+                                        @endif
+                                    @endforeach
+                                </td>                              
+                                <td class="text-center">
+                                    <a href="{{route('admin.supervisor.theses.show', [$accept->thesis_id] )}}" class="btn btn-primary">Detail</a>
                                 </td> 
                             </tr>
-                            <?php $n++ ?>
                             @endforeach
                         </tbody>
                     </table>

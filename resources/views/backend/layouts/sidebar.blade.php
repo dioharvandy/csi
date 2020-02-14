@@ -21,12 +21,6 @@
                                 <i class="nav-icon"></i> Tugas Akhir
                             </a>
                     </li>
-
-                    <li class="nav-item">
-                            <a class="nav-link" href="{{ route('students.index') }}">
-                                <i class="nav-icon"></i> Seminar Proposal
-                            </a>
-                    </li>
                 </ul>
             </li>
             @endif
@@ -41,7 +35,7 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.supervisor.index') }}">
-                                <i class="nav-icon"></i> Tugas Akhir Mahasiswa
+                                <i class="nav-icon"></i> TA Mahasiswa
                             </a>
                     </li>
                 </ul>

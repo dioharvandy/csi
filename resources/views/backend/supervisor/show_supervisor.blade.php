@@ -60,7 +60,7 @@
                         <i class="fa fa-book"></i> <strong>Logbook</strong>
                     </div>
                     <div class="card-body">
-                            <a class="btn btn-primary" href="{{route('students.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a>
+                            <a class="btn btn-primary" href="{{route('admin.supervisor.ta_logbook.index', [$theses[0]->id])}}">Lihat Logbook</a>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         <i class="fa fa-file"></i> <strong>Seminar Proposal</strong>
                     </div>
                     <div class="card-body">
-                        <a href="{{route('students.prosem.index', [$theses[0]->id])}}" class="btn btn-primary">Seminar Proposal</a>
+                        <a href="{{route('admin.supervisor.prosem.index', [$theses[0]->id])}}" class="btn btn-primary">Seminar Proposal</a>
                     </div>
                 </div>
         </div>

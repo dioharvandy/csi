@@ -22,17 +22,6 @@
                         <div class="col-6">
                             <strong><i class="fa fa-list "></i> List Seminar Proposal</strong>
                         </div>
-
-                        <!-- Button trigger modal -->
-                        <div  class="text-right col-6">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelId">
-                                Tambahkan Proposal
-                                </button>
-                        </div>
-                        <form class="post" action="{{route('students.prosem.store')}}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            @include('backend.seminar_proposal._modal')
-                        </form>
                 </div>
 
                 {{-- CARD BODY--}}
@@ -50,30 +39,54 @@
                         <tr>
                             <th class="text-center">Judul Tugas Akhir</th>
                             <th class="text-center">Status</th>
-                            <th class="text-center">Aksi</th>
+                            {{--  <th class="text-center">Aksi</th>  --}}
+                            <th class="text-center">Administrasi</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @foreach($theses as $thesis)
-                                <tr>
-                                    <td class="text-center">{{ $thesis->title }}</td>
-                                    <td class="text-center">              
-                                        @foreach ($t_statuses as $key => $val)                                           
-                                            @if ($key == $thesis->status)
-                                                {{ $val }}
+                            <tr>
+                                <td class="text-center">{{ $thesis->title }}</td>
+                                <td class="text-center">              
+                                    @foreach ($t_statuses as $key => $val)                                           
+                                        @if ($key == $thesis->status)
+                                            @if($thesis->status == 0)
+                                                <h4>
+                                                    <span class="badge badge-primary">{{ $val }}</span>
+                                                </h4>
+                                            @elseif($thesis->status == 1)
+                                                <h4>
+                                                    <span class="badge badge-success">{{ $val }}</span>
+                                                </h4>
+                                            @else
+                                                <h4>
+                                                    <span class="badge badge-danger">{{ $val }}</span>
+                                                </h4>
                                             @endif
-                                       @endforeach
-                                    </td>
-                                    <td class="text-center">
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <div class="text-center">
                                         <a href= {{route('students.prosem.download', [$thesis->id])}} class="btn btn-outline-primary">
-                                            <i class="fas fa-file-download"></i>
+                                            <i class="fas fa-file-download" data-toggle="tooltip" title="Download file"></i>
+                                        </a>    
+
+                                        <a href="{{route('admin.supervisor.prosem.show', [$thesis->id] )}}" class="btn btn-outline-primary">
+                                            <i class="fas fa-eye" data-toggle="tooltip" title="Detail"></i>
                                         </a>
-                                        <a href="{{route('students.prosem.show', [$thesis->id] )}}" class="btn btn-outline-primary">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                            
+                                        {{--  <form class="post" action="{{route('admin.supervisor.prosem.accepted', [$inputs])}}" method="post">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model.{{$thesis->id}}">
+                                                    Input Nilai
+                                            </button>
+                                            @csrf
+                                            @include('backend.seminar_proposal.supervisor._modal')         
+                                        </form>  --}}
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -113,9 +126,3 @@
     }
 </script>
 @endsection
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
-  Launch
-</button>

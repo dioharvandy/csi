@@ -21,6 +21,6 @@ class ThesisSupervisor extends Model
 
     public function thesis()
     {
-        return $this->belongsTo(Theses::class);
+        return $this->belongsTo(Theses::class, 'thesis_id');
     }
 }
