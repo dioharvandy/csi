@@ -27,6 +27,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="progress" class="form-label">Progress</label>
+                        <textarea required name="progress" id="progress" cols="30" rows="5" class="form-control" readonly></textarea>
+                        
+                    </div>
+                    <div class="form-group">
                         <label for="status" class="form-label">Status</label>
                         <select name="status" id="status" class="form-control">
                             <option value="1">Submitted</option>

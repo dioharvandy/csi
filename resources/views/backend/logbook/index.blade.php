@@ -9,6 +9,9 @@
 @endsection
 
 @section('toolbar')
+<!-- {!! cui_toolbar_btn(route('logbook.create'), 'icon-plus', 'Tambah Logbook TA') !!} -->
+<button class="buttonAncak btn-primary"  data-toggle="modal" data-target="#modalTambah" id="addLogbook"><i class="fa fa-plus-circle"></i>&nbsp Tambah Logbook TA</button>
+
 @endsection
 <button class="buttonAncak btn-primary"  data-toggle="modal" data-target="#modalTambah" id="addLogbook"><i class="fa fa-plus-circle"></i>&nbsp Tambah Logbook TA</button>
 
