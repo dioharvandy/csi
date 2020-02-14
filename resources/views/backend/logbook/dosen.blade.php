@@ -27,6 +27,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="progress" class="form-label">Progress</label>
+                        <textarea readonly name="progress" id="progress" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="status" class="form-label">Status</label>
                         <select name="status" id="status" class="form-control">
                             <option value="1">Submitted</option>
@@ -48,6 +52,25 @@
                     <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Info -->
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="modalInfoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalInfoLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalInfoText">
+                
+            </div>
+            <div class="modal-footer">
+            </div>
         </div>
     </div>
 </div>
@@ -85,7 +108,7 @@
                                             <td>{{ $logbook->thesis->student->name }}</td>
                                             <td>{{ $logbook->date }}</td>
                                             <td class="text-center">
-                                                <button class="popup btn btn-info">
+                                                <button class="popup btn btn-info" data-toggle="modal" data-target="#modalInfo" data-label="Progress Logbook TA">
                                                     <i class="fa fa-info"></i>
                                                     <span class="popuptext">
                                                         {{ $logbook->progress }}
@@ -95,7 +118,7 @@
                                             <td>{{ $logbook->supervised_at }}</td>
                                             <td class="text-center">
                                                 @if($logbook->notes)
-                                                <button class="popup btn btn-info">
+                                                <button class="popup btn btn-info" data-toggle="modal" data-target="#modalInfo" data-label="Note Logbook TA">
                                                     <i class="fa fa-info"></i>
                                                     <span class="popuptext">
                                                         {{ $logbook->notes }}
@@ -121,7 +144,7 @@
                                                 @if($logbook->file_notes)
                                                 <a href="{{ url('/file/'.$logbook->file_notes) }}" download class="btn btn-success btn-sm"><i class="fa fa-file"></i> Note</a>
                                                 @endif
-                                                <button class="btn btn-info editLogbook btn-sm" data-toggle="modal" data-target="#modalEdit" data-id="{{ $logbook->id }}" data-status="{{ $logbook->status }}" data-notes="{{ $logbook->notes }}" id="editLogbook-{{ $logbook->id }}"><i class="fa fa-check-circle"></i> Aksi</button>
+                                                <button class="btn btn-info editLogbook btn-sm" data-toggle="modal" data-target="#modalEdit" data-id="{{ $logbook->id }}" data-status="{{ $logbook->status }}" data-notes="{{ $logbook->notes }}" data-progress="{{ $logbook->progress }}" id="editLogbook-{{ $logbook->id }}"><i class="fa fa-check-circle"></i> Aksi</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -147,7 +170,11 @@
             // When the user clicks on div, open the popup
             $(".popup").click(function(){
                 var popup = $(this).children("span")[0];
-                popup.classList.toggle("show");
+                var label = $(this).data('label');
+
+                $("#modalInfoLabel").html(label);
+                $("#modalInfoText").html(popup);
+                // popup.classList.toggle("show");
             });
         });
 
@@ -155,6 +182,7 @@
             $("#id_edit").val($(this).data("id"));
             $("#notes").html($(this).data("notes"));
             $("#status").val($(this).data("status"));
+            $("#progress").html($(this).data('progress'));
         });
     </script>
 @endsection

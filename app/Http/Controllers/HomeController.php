@@ -46,7 +46,7 @@ class HomeController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $profile = Student::findOrFail(\Auth::user()->student->id);

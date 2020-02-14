@@ -8,7 +8,7 @@
 @endsection
 
 @section('toolbar')
-    
+    {!! cui_toolbar_btn(route('profile.edit'), 'icon-pencil', 'Edit Profil') !!}
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                             <strong><i class="fa fa-book"></i> Profil {{ ucwords(strtolower(Auth::user()->student->name)) }}</strong>
                         </div>
                         <div class="text-right col-6">
-                            <a class="btn btn-warning text-right btn-sm" href="{{ route('profile.edit') }}"><strong><i class="fa fa-edit"></i></strong> Edit</a>
+                            <!-- <a class="btn btn-warning text-right btn-sm" href="{{ route('profile.edit') }}"><strong><i class="fa fa-edit"></i></strong> Edit</a> -->
                         </div>
                     </div>
                 </div>

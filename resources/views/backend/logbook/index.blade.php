@@ -9,8 +9,8 @@
 @endsection
 
 @section('toolbar')
+        {!! buttonModal('modalTambah', 'icon-plus', 'Tambah Logbook TA') !!}
 @endsection
-<button class="buttonAncak btn-primary"  data-toggle="modal" data-target="#modalTambah" id="addLogbook"><i class="fa fa-plus-circle"></i>&nbsp Tambah Logbook TA</button>
 
 <!-- Modal Tambah -->
 <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="modalTambahLabel" aria-hidden="true">
@@ -92,6 +92,25 @@
     </div>
 </div>
 
+<!-- Modal Info -->
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="modalInfoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalInfoLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalInfoText">
+                
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 @section('content')
     <div class="row justify-content-center">
         <div class="col">
@@ -125,7 +144,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $logbook->date }}</td>
                                             <td class="text-center">
-                                                <button class="popup btn btn-info">
+                                                <button class="popup btn btn-info" data-toggle="modal" data-target="#modalInfo" data-label="Progress Logbook TA">
                                                     <i class="fa fa-info"></i>
                                                     <span class="popuptext">
                                                         {{ $logbook->progress }}
@@ -136,7 +155,7 @@
                                             <td>{{ $logbook->supervised_at }}</td>
                                             <td class="text-center">
                                                 @if($logbook->notes)
-                                                <button class="popup btn btn-info">
+                                                <button class="popup btn btn-info" data-toggle="modal" data-target="modalInfo" data-label="Note Logbook TA">
                                                     <i class="fa fa-info"></i>
                                                     <span class="popuptext">
                                                         {{ $logbook->notes }}
@@ -189,7 +208,11 @@
             // When the user clicks on div, open the popup
             $(".popup").click(function(){
                 var popup = $(this).children("span")[0];
-                popup.classList.toggle("show");
+                var label = $(this).data('label');
+                
+                $("#modalInfoLabel").html(label);
+                $("#modalInfoText").html(popup);
+                // popup.classList.toggle("show");
             });
         });
 
