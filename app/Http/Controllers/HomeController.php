@@ -51,13 +51,14 @@ class HomeController extends Controller
 
         $profile = Student::findOrFail(\Auth::user()->student->id);
 
-
-        if($request->hasFile('image'))
+        $name = null;
+        if($request->hasFile('photo'))
         {
-            $file = $request->file('image');
-            $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString()); 
-            $name = $timestamp. '-' .$file->getClientOriginalName();
-            $data->image = $name;
+            // dd($request);
+            $file = $request->file('photo');
+            $timestamp = microtime(); 
+            $name = $timestamp. '.' .$file->getClientOriginalName();
+            // $data->image = $name;
             $file->move(public_path().'/images/', $name);  
         // dd($profile);
         }
@@ -67,7 +68,7 @@ class HomeController extends Controller
             'birthplace' => $request->birthplace,
             'address' => $request->address,
             'phone' => $request->phone,
-            'photo' => $request->photo,
+            'photo' => $name ? $name : $profile->photo,
         ]);
 
         $profile->save();

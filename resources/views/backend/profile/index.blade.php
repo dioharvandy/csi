@@ -8,7 +8,7 @@
 @endsection
 
 @section('toolbar')
-    {!! cui_toolbar_btn(route('profile.edit'), 'icon-pencil', 'Edit Profil') !!}
+    {!! cui_toolbar_btn(route('profile.edit'), 'icon-pencil', 'Edit Profile') !!}
 @endsection
 
 @section('content')

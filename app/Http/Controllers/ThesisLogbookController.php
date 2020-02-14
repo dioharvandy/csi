@@ -45,14 +45,6 @@ class ThesisLogbookController extends Controller
         ->select('students.nim', 'students.nim', 'thesis_topics.name as topic')
         ->get();
 
-        // $ta = DB::table('tugas_akhir')
-        //         ->join('mahasiswa', 'mahasiswa.id', '=', 'tugas_akhir.mahasiswa_id')
-        //         ->select('mahasiswa.nama', 'mahasiswa.nim', 'tugas_akhir.judul')
-        //         ->where('tugas_akhir.id', '=', $id)
-        //         ->get()[0];
-        // $pembimbingTAs = TaPembimbing::all();
-        // dd($pembimbingTAs);
-        // dd($pembimbingTAs);
         return view('backend.ta.create', compact('bta', 'id'));
     }
 
@@ -68,7 +60,7 @@ class ThesisLogbookController extends Controller
         $ta->progress = $request->input('progress');
 
         $ta->save();
-        session()->flash('flash_success', 'Berhasil menambahkan pembimbing!');
+        session()->flash('flash_success', 'Berhasil menambahkan Progress!');
 
         return view('backend.ta.index');
     }
