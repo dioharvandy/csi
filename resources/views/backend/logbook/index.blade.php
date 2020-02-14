@@ -155,7 +155,7 @@
                                             <td>{{ $logbook->supervised_at }}</td>
                                             <td class="text-center">
                                                 @if($logbook->notes)
-                                                <button class="popup btn btn-info" data-toggle="modal" data-target="modalInfo" data-label="Note Logbook TA">
+                                                <button class="popup btn btn-info" data-toggle="modal" data-target="#modalInfo" data-label="Note Logbook TA">
                                                     <i class="fa fa-info"></i>
                                                     <span class="popuptext">
                                                         {{ $logbook->notes }}
