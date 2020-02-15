@@ -13,21 +13,31 @@
                     <i class="nav-icon icon-people"></i>Tugas Akhir</a>
                 <ul class="nav-dropdown-items">
 
-                    <!-- {{-- Menu Dosen--}}
+{{--                 Menu Dosen--}}
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a class="nav-link" href="{{ route('admin.lecturers.index') }}">
                             <i class="nav-icon"></i>Dosen
                         </a>
-                    </li> -->
+                    </li>
 
                     {{-- Menu Mahasiswa--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.ta.index') }}">
+                            <i class="nav-icon"></i> Tugas Akhir
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.students.index') }}">
                             <i class="nav-icon"></i> Mahasiswa
                         </a>
                     </li>
 
                 </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/thesis_seminar') }}">
+                    <i class="nav-icon fas fa-laptop"></i> Pengelolaan Semhas</a>
             </li>
 
 
