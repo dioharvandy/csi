@@ -40,8 +40,14 @@ class Student extends Model
         return 'img/default-user.png';
     }
 
+    public function theses()
+    {
+        return $this->hasOne(Theses::class);
+    }
+
     public function thesis()
     {
         return $this->hasOne(Thesis::class, 'student_id');
     }
+
 }

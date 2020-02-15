@@ -162,9 +162,25 @@
 <script src="{{ asset('js/backend.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#file_report").hide();
+        $("#editfile").click(function(e){
+            $("#file_report").click();
+            // $("#form_file").submit();
+            $("#file_report").change(function(e){
+                $("#form_file").submit();
+            });
+        });
+    });
+</script>
+
 <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> -->
 <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script> -->
 <script type="text/javascript" src="https://cdn.datatables.net/v/se-2.2.13/dt-1.10.20/datatables.min.js"></script>
+
 @stack('after-scripts')
 
 @isset(Auth::user()->id)

@@ -35,6 +35,7 @@
                     </li>
                 </ul>
             </li>
+
             {{-- Menu Tugas Akhir --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.theses.index') }}">
