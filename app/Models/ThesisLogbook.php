@@ -41,12 +41,18 @@ class ThesisLogbook extends Model
         return $this->belongsTo(ThesisSupervisor::class,'supervisor_id','id');
     }
 
-    public static function thesisLogbookList(int $thesis_id,int $count){
-        $thesisLogbooks = self::where('thesis_id',$thesis_id)
+    public static function thesisLogbookList(int $thesis_id,int $count)
+    {
+        $thesisLogbooks = self::where('thesis_id', $thesis_id)
             ->paginate($count);
-        $thesisLogbooks->each(function ($thesisLogbook){
+        $thesisLogbooks->each(function ($thesisLogbook) {
             return $thesisLogbook->status = self::$status[$thesisLogbook->status];
         });
         return $thesisLogbooks;
+    }
+
+    public function theses()
+    {
+        return $this->belongsTo(Theses::class);
     }
 }

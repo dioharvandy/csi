@@ -53,7 +53,7 @@
 
                         <p class="text-muted">Masuk ke akun Anda</p>
 
-                        <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('postlogin') }}">
                             {{ csrf_field() }}
 
                             <div class="input-group mb-3">
@@ -83,6 +83,7 @@
                                         Password?</a>
                                 </div>
                             </div>
+
                         </form>
 
                     </div>

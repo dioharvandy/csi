@@ -19,7 +19,12 @@
 
                 {{-- CARD HEADER--}}
                 <div class="card-header">
-                    <strong><i class="fa fa-list"></i> List Tugas Akhir</strong>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong><i class="fa fa-list "></i> List Tugas Akhir</strong>
+                        </div>
+                        @include('backend.theses._modal')
+                        {{-- </div> --}}
                 </div>
 
                 {{-- CARD BODY--}}
@@ -66,7 +71,6 @@
 
                     <div class="row justify-content-end">
                         <div class="col-md-6 text-right">
-
                         </div>
                         <div class="col-md-6 justify-content-end">
                             <div class="row justify-content-end">

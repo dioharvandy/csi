@@ -18,6 +18,7 @@ class CreateThesisSupervisorsTable extends Migration
             $table->unsignedBigInteger('thesis_id');
             $table->unsignedBigInteger('lecturer_id');
             $table->integer('position')->default(0);
+            $table->integer('status')->default(0);
             $table->timestamps();
 
             $table->foreign('thesis_id')->references('id')->on('theses');
