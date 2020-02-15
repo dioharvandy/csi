@@ -10,33 +10,38 @@
 
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-people"></i> Pengelolaan Sivitas</a>
+                    <i class="nav-icon icon-people"></i> Tugas Akhir</a>
                 <ul class="nav-dropdown-items">
 
-                    {{-- Menu Dosen--}}
+                    <!-- {{-- Menu Dosen--}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.lecturers.index') }}">
                             <i class="nav-icon"></i> Dosen
                         </a>
-                    </li>
+                    </li> -->
 
                     {{-- Menu Mahasiswa --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.students.index') }}">
+                        <a class="nav-link" href="{{ route('admin.ta.index') }}">
                             <i class="nav-icon"></i> Mahasiswa
                         </a>
                     </li>
 
-                    {{-- Menu Tendik --}}
+                    <!-- {{-- Menu Tendik --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.staffs.index') }}">
                             <i class="nav-icon"></i> Tendik
                         </a>
-                    </li>
+                    </li> -->
 
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logbook.index') }}">
+                    <i class="nav-icon icon-speedometer"></i>Log Tugas Akhir
+                </a>
+            </li>
 
         </ul>
     </nav>

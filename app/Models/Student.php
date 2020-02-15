@@ -14,6 +14,7 @@ class Student extends Model
         'photo' => 'file|image'
     ];
 
+    protected $table = 'students';
     protected $guarded = [];
     protected $dates = ['birthdate'];
     public $incrementing = false;
@@ -37,5 +38,10 @@ class Student extends Model
             return 'storage/photo/lecturer/'.$this->photo;
         }
         return 'img/default-user.png';
+    }
+
+    public function thesis()
+    {
+        return $this->hasOne(Thesis::class, 'student_id');
     }
 }

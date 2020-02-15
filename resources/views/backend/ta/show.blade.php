@@ -8,13 +8,6 @@
     ]) !!}
 @endsection
 
-@section('toolbar')
-    {!! cui_toolbar_btn_delete(route('admin.students.destroy', [$student->id]), $student->id, 'icon-trash', 'Hapus Mahasiswa', 'Anda yakin akan menghapus mahasiswa ini?') !!}
-    {!! cui_toolbar_btn(route('admin.students.edit', $student->id), 'icon-pencil', 'Edit Mahasiswa') !!}
-    {!! cui_toolbar_btn(route('admin.students.index'), 'icon-list', 'List Mahasiswa') !!}
-    {!! cui_toolbar_btn(route('admin.students.create'), 'icon-plus', 'Tambah Mahasiswa') !!}
-@endsection
-
 @section('content')
     <div class="row justify-content-center">
         <div class="col">

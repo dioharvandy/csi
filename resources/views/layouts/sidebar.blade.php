@@ -10,19 +10,19 @@
 
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-people"></i> Pengelolaan Sivitas</a>
+                    <i class="nav-icon icon-people"></i>Tugas Akhir</a>
                 <ul class="nav-dropdown-items">
 
-                    {{-- Menu Dosen--}}
+                    <!-- {{-- Menu Dosen--}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.dosen.index') }}">
+                        <a class="nav-link">
                             <i class="nav-icon"></i>Dosen
                         </a>
-                    </li>
+                    </li> -->
 
                     {{-- Menu Mahasiswa--}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.mahasiswa.index') }}">
+                        <a class="nav-link" href="{{ route('admin.ta.index') }}">
                             <i class="nav-icon"></i> Mahasiswa
                         </a>
                     </li>
