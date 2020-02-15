@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Theses;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use DB;
 
 class StudentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['permission:manage_students']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['permission:manage_students']);
+    // }
 
     public function index()
     {
@@ -57,7 +59,7 @@ class StudentController extends Controller
             'department_id',
             'address',
             'marital_status'));
-        
+
         if($request->hasFile('photo')){
             $fileExt = $request->photo->extension();
             $fileName = uniqid("photo").".".$fileExt;

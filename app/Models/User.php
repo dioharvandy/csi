@@ -66,4 +66,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserEducation::class, 'id', 'user_id');
     }
+
 }

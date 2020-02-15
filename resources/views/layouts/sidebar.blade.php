@@ -10,24 +10,40 @@
 
             <li class="nav-item nav-dropdown">
                 <a class="nav-link nav-dropdown-toggle" href="#">
-                    <i class="nav-icon icon-people"></i> Pengelolaan Sivitas</a>
-                
+                    <i class="nav-icon icon-people"></i>Tugas Akhir</a>
+                <ul class="nav-dropdown-items">
 
-                    {{-- Menu Dosen--}}
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="">
+{{--                 Menu Dosen--}}
+                    <li class="nav-item">
+
+
+                        <a class="nav-link" href="{{ route('admin.lecturers.index') }}">
+
                             <i class="nav-icon"></i>Dosen
                         </a>
                     </li> --}}
 
                     {{-- Menu Mahasiswa--}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/attendance') }}">
-                            <i class="nav-icon"></i> Attendance
+                        <a class="nav-link" href="{{ route('admin.ta.index') }}">
+                            <i class="nav-icon"></i> Tugas Akhir
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.students.index') }}">
+
+                            <i class="nav-icon"></i> Mahasiswa
                         </a>
                     </li>
 
                 
+            </li>
+
+
+            <li class="nav-item">
+
+                <a class="nav-link" href="{{ url('/thesis_seminar') }}">
+                    <i class="nav-icon fas fa-laptop"></i> Pengelolaan Semhas</a>
             </li>
 
 

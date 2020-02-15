@@ -21,7 +21,7 @@ class CreateClassLecturesTable extends Migration
             $table->timestamps();
 
             $table->foreign('lecturer_id')->references('id')->on('lecturers');
-            $table->foreign('classroom_id')->references('id')->on('classrooms');
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
         });
     }
 

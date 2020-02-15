@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
     {!! cui_breadcrumb([
-        'Home' => route('admin.home'),
+        'Home' => route('home'),
         'Mahasiswa' => route('admin.students.index'),
         'Edit' => '#'
     ]) !!}
@@ -19,11 +19,11 @@
                 <div class="col-md-8">
                     <div class="card">
 
-                        {{ html()->form('POST', route('admin.students.store'))->acceptsFiles()->open() }}
+                        {{--  {{ html()->form('POST', route('admin.students.store'))->acceptsFiles()->open() }}  --}}
 
                         {{-- CARD HEADER--}}
                         <div class="card-header">
-                            <i class="fa fa-edit"></i> <strong>Tambah Mahasiswa</strong>
+                          <!--   <i class="fa fa-edit"></i> <strong>Tambah Mahasiswa</strong> -->
                         </div>
 
                         {{-- CARD BODY--}}

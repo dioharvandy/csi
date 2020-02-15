@@ -3,14 +3,14 @@
 @section('breadcrumb')
     {!! cui_breadcrumb([
         'Home' => url('/'),
-        'Attendance' => url('/attendance'),
+        'Attendance' => url('admin/attendance'),
         'Index' => '#'
     ]) !!}
 @endsection
 
 
 @section('toolbar')
-    <strong><i class="fa fa-list"></i> List Absensi tanggal {{$attendance_students[0]->date}}</strong>
+{{--    <strong><i class="fa fa-list"></i> List Absensi tanggal {{$attendance_students[0]->date}}</strong>--}}
     {{-- {!! cui_toolbar_btn(route('students.create'), 'icon-plus', 'Tambah Mahasiswa') !!} --}}
 @endsection
 
@@ -30,14 +30,13 @@
 
                     <div class="row justify-content-end">
                         <div class="col-md-12 justify-content-end">
-                                <div class="row">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="birthplace">Mata Kuliah:</label>
                                         {{ html()->text('mataKuliah', $attendance_students[0]->crs_name)->class('form-control-plaintext') }}
                                     </div>
                                 </div>
-                            
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="birthday">Kode MatKul:</label>
@@ -82,7 +81,6 @@
                                 <td class="">{{ $student->nim }}</td> --}}
                                 <td class="">
                                     {{config('central.attendance_student') [$att_student->status]}}
-                                    
                                     {{-- {!! cui_btn_edit(route('admin.students.edit', [$student->id])) !!}
                                     {!! cui_btn_delete(route('admin.students.destroy', [$student->id]), "Anda yakin akan menghapus data mahasiswa ini?") !!} --}}
                                 </td>

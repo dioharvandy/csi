@@ -14,6 +14,7 @@ class Student extends Model
         'photo' => 'file|image'
     ];
 
+    protected $table = 'students';
     protected $guarded = [];
     protected $dates = ['birthdate'];
     public $incrementing = false;
@@ -21,6 +22,11 @@ class Student extends Model
     public function user()
     {
         return $this->hasOne(User::class, 'id');
+    }
+    
+    public function theses()
+    {
+        return $this->hasMany(Theses::class, 'student_id');
     }
 
     public function department(){
@@ -38,4 +44,15 @@ class Student extends Model
         }
         return 'img/default-user.png';
     }
+
+    public function theses()
+    {
+        return $this->hasOne(Theses::class);
+    }
+
+    public function thesis()
+    {
+        return $this->hasOne(Thesis::class, 'student_id');
+    }
+
 }

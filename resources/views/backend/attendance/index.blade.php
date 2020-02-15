@@ -2,8 +2,7 @@
 
 @section('breadcrumb')
     {!! cui_breadcrumb([
-        'Home' => url('/'),
-        'Attendance' => url('/attendance'),
+        'Attendance' => route('admin.attendance.index'),
         'Index' => '#'
     ]) !!}
 @endsection
@@ -37,51 +36,58 @@
                           </div>
                         </div>
                       {!! Form::close() !!}
+                    <i class="fa fa-list"></i>
+                    @if($termTitle[0]->period == 1)Ganjil @else Genap @endif
+                    {{" ".$termTitle[0]->year}}
                 </div>
 
                 {{-- CARD BODY--}}
                 <div class="card-body">
 
                     <div class="row justify-content-end">
-                        <div class="col-md-6 justify-content-end">
+                        <div class="col-md-6 justify-content-end mt-n2 mr-3">
                             <div class="row justify-content-end">
-                            </div>
+                                {{-- {{ $data->links() }} --}}
+                                {!! Form::open(['method' => 'GET', 'url' => '/admin/attendance', 'class' => '', 'role' => 'search'])  !!}
+                                <div class="form-row align-items-center">
+                                    <div class="col-auto">
+{{--                                        <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>--}}
+                                        <select name="semester" class="custom-select mr-sm-3" id="inlineFormCustomSelect">
+                                            @foreach($term as $sems)
+                                                <option value="{{$sems->id}}">{{$sems->year}} @if($sems->period == 1)Ganjil @else Genap @endif</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-auto my-1 ">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
+                           </div>
                         </div>
                     </div>
 
-                    <table class="table table-striped">
+
+                    <table class="table table-striped mt-1">
                         <thead>
                         <tr>
+                            <th class="text-center">Kelas</th>
                             <th class="text-center">Mata Kuliah</th>
-                            <th class="text-center">Kode MatKul</th>
                             <th class="text-center">Dosen Pengampu</th>
-                            <th class="text-center">Semester</th>
-                            <th class="text-center">Detail</th>
+                            {{-- <th class="text-center">Jumlah Pertemuan</th> --}}
+                            <th class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{-- @foreach($students as $student) --}}
-                        @foreach($attendance as $att)
+                        @foreach($data as $classLecturer)
                             <tr>
+                                <td class="text-center">{{ $classLecturer->name }}</td>
+                                <td class="text-center">{{ $classLecturer->namaMK." (".$classLecturer->kode."/".$classLecturer->kredit.")"}}</td>
+                                <td class="text-center">{{ $classLecturer->nama }}</td>
+
                                 <td class="text-center">
-                                    {{ $att->crs_name}}
-                                </td>
-                                <td class="text-center">
-                                    {{ $att->code}}
-                                </td>
-                                {{-- <td>{{ $student->name }}</td>
-                                <td class="text-center">{{ $student->nim }}</td> --}}
-                                <td class="text-center">
-                                    {{ $att->lecname}}
-                                    
-                                    {{-- {!! cui_btn_edit(route('admin.students.edit', [$student->id])) !!}
-                                    {!! cui_btn_delete(route('admin.students.destroy', [$student->id]), "Anda yakin akan menghapus data mahasiswa ini?") !!} --}}
-                                </td>
-                                <td class="text-center">
-                                    {{ $att->semester}}
-                                </td>
-                                <td class="text-center">
-                                    {!! cui_btn_view(url('/attendance/'. $att->id.'/show')) !!}
+                                    {!! cui_btn_view(url('admin/attendance/'.$classLecturer->id.'/show')) !!}
                                 </td>
                             </tr>
                         @endforeach
@@ -94,7 +100,10 @@
                         </div>
                         <div class="col-md-6 justify-content-end">
                             <div class="row justify-content-end">
+
                                 {{-- {{ $students->links() }} --}}
+                                {{-- {{ $data->links() }} --}}
+
                             </div>
                         </div>
                     </div>

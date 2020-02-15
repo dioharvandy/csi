@@ -16,7 +16,9 @@
         "laravelcollective/html": "^6.0",
         "laravolt/avatar": "^3.0",
         "spatie/laravel-html": "^2.23",
-        "spatie/laravel-permission": "^3.0"
+        "spatie/laravel-model-status": "^1.9",
+        "spatie/laravel-permission": "^3.0",
+        "yoeunes/toastr": "^1.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

@@ -10,7 +10,8 @@
 
     {{--    Styles--}}
     @stack('before-styles')
-    <link href="{{ mix('css/backend.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/backend.css') }}" rel="stylesheet" >
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @stack('after-styles')
 </head>
 
@@ -63,7 +64,7 @@
         <!-- Breadcrumb Menu-->
             <li class="breadcrumb-menu d-md-down-none">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    @yield("breadcrumb-menu")
+                    @yield("toolbar")
                 </div>
             </li>
 
@@ -93,6 +94,15 @@
 <script src="{{ asset('js/vendor.js') }}"></script>
 <script src="{{ asset('js/backend.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script type="text/javascript">
+@if(Session::has('success'))
+    toastr.success("{ Session::get('success') }}", 'Berhasil');
+@elseif(Session::has('failed'))
+    toastr.error("{{ Session::get('failed') }}", 'Failed');
+@endif    
+</script>
+
 @stack('after-scripts')
 
 @isset(Auth::user()->id)
@@ -101,5 +111,23 @@
 @yield('javascript')
 
 </body>
+
+<style>
+    .buttonancak{
+        align-items: center;
+        border-radius: 500px;
+        bottom: 16px;
+        cursor: pointer;
+        display: flex;
+        height: 64px;
+        justify-content: center;
+        min-width: 64px;
+        position: fixed;
+        right: 16px;
+        width: fit-content;
+        color: white;
+        font-size: 32px;
+    }
+</style>
 
 </html>
