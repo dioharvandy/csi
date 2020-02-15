@@ -23,7 +23,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {
         // $user = \Auth::user()->student->photo;
         // dd($user);
         // if($user->hasRole('admin')){
@@ -44,7 +44,6 @@ class HomeController extends Controller
 
     public function updateProfile(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -56,10 +55,10 @@ class HomeController extends Controller
         {
             // dd($request);
             $file = $request->file('photo');
-            $timestamp = microtime(); 
+            $timestamp = microtime();
             $name = $timestamp. '.' .$file->getClientOriginalName();
             // $data->image = $name;
-            $file->move(public_path().'/images/', $name);  
+            $file->move(public_path().'/images/', $name);
         // dd($profile);
         }
 
@@ -73,5 +72,12 @@ class HomeController extends Controller
 
         $profile->save();
         return redirect(route('profile.show'));
+        $user = auth()->user();
+        if($user->hasRole('admin')){
+            return view('dashboards.index');
+        }
+        else{
+            return redirect('login');
+        }
     }
 }
