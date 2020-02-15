@@ -16,6 +16,7 @@
 {{--                 Menu Dosen--}}
                     <li class="nav-item">
 
+
                         <a class="nav-link" href="{{ route('admin.lecturers.index') }}">
 
                             <i class="nav-icon"></i>Dosen
@@ -24,6 +25,7 @@
 
                     {{-- Menu Mahasiswa--}}
                     <li class="nav-item">
+
 
                         <a class="nav-link" href="{{ route('admin.ta.index') }}">
                             <i class="nav-icon"></i> Tugas Akhir
@@ -39,11 +41,13 @@
                 </ul>
             </li>
 
+
             <li class="nav-item">
 
                 <a class="nav-link" href="{{ url('/thesis_seminar') }}">
                     <i class="nav-icon fas fa-laptop"></i> Pengelolaan Semhas</a>
             </li>
+
 
         </ul>
     </nav>

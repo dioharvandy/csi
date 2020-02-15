@@ -14,6 +14,20 @@
 Auth::routes();
 Route::get('/', 'HomeController@index');
 
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('kelas','ClassController@index')->name('kelas.index');
+Route::get('kelas/tambah','ClassController@tambah')->name('kelas.tambah');
+Route::post('kelas/simpan','ClassController@simpan')->name('kelas.simpan');
+Route::get('kelas/edit/{id}','ClassController@edit')->name('kelas.edit');
+Route::post('kelas/update/{id}','ClassController@update')->name('kelas.update');
+Route::get('kelas/delete/{id}','ClassController@delete')->name('kelas.delete');
+Route::get('kelas/detail/{id}','ClassController@detail')->name('kelas.detail');
+Route::get('kelasdosen','ClassLecturerController@index')->name('kelaslecturer.index');
+Route::get('kelasdosen/tambahdosenkelas','ClassLecturerController@tambah')->name('kelaslecturer.tambah');
+Route::post('kelasdosen/simpandosenkelas','ClassLecturerController@simpan')->name('kelas.simpandosenkelas');
+Route::get('kelasdosen/detail/{id}','ClassLecturer@detail')->name('kelaslecturer.detail');
+
+
 Route::get('/profile/show', 'HomeController@showProfile')->name('profile.show');
 Route::get('/profile/edit', 'HomeController@editProfile')->name('profile.edit');
 Route::patch('/profile/edit', 'HomeController@updateProfile')->name('profile.update');
@@ -57,6 +71,7 @@ Route::get('/thesissem_audience/{id}', 'ThesisSemAudienceController@index')->nam
 Route::post('/admin/pesertasemhas', 'ThesisSemAudienceController@store')->name('admin.pesertasemhas.store'); //routing simpan data peserta semhas
 Route::delete('/admin/pesertasemhas/{id}', 'ThesisSemAudienceController@destroy')->name('admin.pesertasemhas.destroy'); //routing hapus data peserta semhas
 Route::get('/admin/pesertasemhas/{id}', 'ThesisSemAudienceController@show')->name('admin.pesertasemhas.show'); //routing tampilkan detail semhas
+
 
 Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.'], function(){
 Route::get('/login', 'AuthController@login')->name('login');

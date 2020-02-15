@@ -17,7 +17,7 @@
     <link href="{!! asset('vendors/css/simple-line-icons.min.css') !!}" rel="stylesheet">
 
     <!-- Main styles for this application -->
-    <link href="{{ mix('css/backend.css') }}" rel="stylesheet" >
+    <link href="{{ asset('css/backend.css') }}" rel="stylesheet" >
 
 </head>
 

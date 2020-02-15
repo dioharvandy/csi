@@ -9,6 +9,7 @@ use App\Models\ClassLecturer;
 
 class AttendanceController extends Controller
 {
+
     public function  create(){
         return view('backend.attendance.create');
     }
@@ -244,6 +245,5 @@ class AttendanceController extends Controller
             // dd($ayam);
             return view('backend.attendance.show', compact('attendance','attendance_students', 'ayam','kolom'));
         }
-
     }
 }
